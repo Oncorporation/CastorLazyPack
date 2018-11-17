@@ -2,7 +2,7 @@
 
 **Latest Version:** 1.4
 
-**Download:** [MWO-SyncDrop-1.4.zip](https://github.com/TheKarubian/MWO-SyncDrop/releases/download/1.3.1/MWO-SyncDrop-1.3.1.zip)
+**Download:** [CastorrsLazyPack1.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/1.4/CastorrsLazyPack1.4.zip)
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
