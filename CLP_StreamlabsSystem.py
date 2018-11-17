@@ -47,7 +47,7 @@ Website = "https://www.twitch.tv/castorr91 https://www.twitch.tv/surn"
     - Removed $lastfollow
 
 Version infomation for older versions
-   can be found in the readme.txt
+   can be found in the readme.md
 """
 #---------------------------------------
 # [Optional] Settings functions
