@@ -483,6 +483,28 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         else:
             parseString = parseString.replace("$weather(", WeatherApi.format("metric"))
 
+    if "$sync(" in parseString:
+        """Parent.Log("sync","-enter-")"""
+        Parent.SendStreamMessage("Sync in:")
+        result = RegSync.search(parseString)
+        Parent.Log("sync reg",result.group(0))
+        if result:
+            fullSync = result.group(0)
+            count = int(result.group("countdown"))
+            message = result.group("message")
+            ytid = result.group("ytid")
+            starttime = int(result.group("starttime"))
+            if (len(ytid) > 1):
+                f = {"link": ytid, "start": starttime, "duration": 17000}
+                Parent.BroadcastWsEvent("EVENT_YUT", json.dumps(f, encoding='utf-8-sig'))
+
+        for step in range(count, 0, -1):
+            Parent.SendStreamMessage("  %d" % (step))
+            """Parent.Log("sync","  %d" % (step))"""
+            time.sleep(0.25)
+        
+        parseString = message
+
 	"""Grabs a random gif from Giphy based on your search term 
 	    $giphy(search term, duration seconds)
 	    $giphy(Epic+Fail, 15)
@@ -1029,6 +1051,10 @@ RegGiphy = re.compile(r"(?:\$giphy\([\ ]*(?P<search>[^\"\']+)"
 RegMovie = re.compile(r"(?:\$mov..\([\ ]*(?P<link>[^\"\'\,]+)"
                     r"[\ ]*\,[\ ]*(?P<start>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
+RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
+                    r"[\ ]*\,[\ ]*(?P<countdown>[^\"\']+)"
+                    r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']+)"
+                    r"[\ ]*\,[\ ]*(?P<starttime>[^\"\']*)[\ ]*\))", re.U)
 RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)
