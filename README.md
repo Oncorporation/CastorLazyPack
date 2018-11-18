@@ -3,6 +3,7 @@
 **Latest Version:** 1.4
 
 **Download:** [CastorrsLazyPack1.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.zip)
+
 **Updated:** Charles Fettinger 2018-11-17
 
 ## Synopsis
@@ -11,19 +12,19 @@ Extra $parameters and !sr info when missing id/url
 
 ## Update History
     1.4
-        - Added $giphy(search term, duration ) 
+        - Added $giphy(<SEARCH TERM>,<DURATION>) 
             - looks up random giphy via API
             - use 5 for 5 seconds
         - Added Button to look up giphy API key
         - Added text for giphy fail over gif
         - Added base giphy url variable
-        - Added $movie(url, start, duration)
+        - Added $movie(<LINK>,<START TIME>,<DURATION>) 
             - use 5 for 5 seconds
-        - Added $movyt(youtube id, start, duration)
+        - Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
             - look up the encoded string id of a you tube to display
             - use 5 for 5 seconds
+	- Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) command
         - Added variables and UI items to support
-	- Added $sync command
 
         - Updated client.js, index.html to support new features
 
@@ -125,62 +126,61 @@ Extra $parameters and !sr info when missing id/url
 
 Completely new parameters, most of them are doable through api calls.
 
-$weather(LOCATION)      - Shows the weather for the location
-$followage		    - Shows how long the user have been following your channel, if no target is picked it check users
-$followdate	   	- shows what date the user followed your channel, if no target is picked it check users
-$avatar         - Returns a link to the users twitch avatar in 300x300 pixels
-$touser         - Works as $target if one is given, and $user if not
-$cviewers        - Shows the current amount of viewers for your channel
-$views          - Shows the total amount of views your channel has
-$subemotes      - Shows all the sub emotes for your channel
-$bttvemotes     - Shows all the BTTV emotes you got in the channel
-$ffzemotes      - Shows all the FFZ emotes you got in the channel
-$latestyt       - Links your latest YouTube video
-$latesttweet    - Your latest tweet - uses the settings set in the UI
-$age            - Shows the time of creation for the twitch account specified, if no target is picked it check users
-$ctt            - Posts the click to tweet link based on the set link.
-$setctt         - Sets the link used for $ctt
-$sessionfollows - Show amount of follows for current session
-$lastfollow     - Returns name of last follower
-$torand         - Returns target and random user if no target is present
-$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
-$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>, <START TIME>) - counts down to sync players in various games, set the message, 
-	optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
-$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
-$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
-$movie(<LINK>,<START TIME>, <DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds,
-	link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
-$movyt(<YOUTUBE ID>,<START TIME>, <DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> 
-	for <DURATION> seconds. 
-	Example $movyt(Vz7SS2qh-6k, 45, 15) plays https://www.youtube.com/watch?v=Vz7SS2qh-6k from 45 seconds for 15 seconds
-$default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
-
+	$weather(LOCATION)      - Shows the weather for the location
+	$followage		    - Shows how long the user have been following your channel, if no target is picked it check users
+	$followdate	   	- shows what date the user followed your channel, if no target is picked it check users
+	$avatar         - Returns a link to the users twitch avatar in 300x300 pixels
+	$touser         - Works as $target if one is given, and $user if not
+	$cviewers        - Shows the current amount of viewers for your channel
+	$views          - Shows the total amount of views your channel has
+	$subemotes      - Shows all the sub emotes for your channel
+	$bttvemotes     - Shows all the BTTV emotes you got in the channel
+	$ffzemotes      - Shows all the FFZ emotes you got in the channel
+	$latestyt       - Links your latest YouTube video
+	$latesttweet    - Your latest tweet - uses the settings set in the UI
+	$age            - Shows the time of creation for the twitch account specified, if no target is picked it check users
+	$ctt            - Posts the click to tweet link based on the set link.
+	$setctt         - Sets the link used for $ctt
+	$sessionfollows - Show amount of follows for current session
+	$lastfollow     - Returns name of last follower
+	$torand         - Returns target and random user if no target is present
+	$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
+	$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) - counts down to sync players in various games, set the message, optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
+	$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
+	$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
+	$movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
+	$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
+	$default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
 #############################
 #     Example Commands      #
 #############################
 
 
-$weather(LOCATION)      - https://gyazo.com/4fcac95d7d53e21f12626ac81012156a
-$followage		- 
-$followdate		- 
-$avatar      		- 
-$touser                 - https://gyazo.com/7d6e92ff518d6a50408fa4045837533e
-$viewers                - https://gyazo.com/d5b2326f27942e96004e3c0de6a7c418
-$views                  - https://gyazo.com/6bf432a42acb0370e6efe5aadec94b26
-$subemotes              - https://gyazo.com/8547dc9c51e289592ba1879b6e76f891
-$bttvemotes             - https://gyazo.com/165fa45bc2fc8fe87f349ed87a72e066
-$ffzemotes              - https://gyazo.com/93aff00a158696f0785fd3ca938cf51b
-$latestyt               - https://gyazo.com/dcc686bd7ff6f37b4d71b6fec33e2788
-$latesttweet            - https://gyazo.com/bca763e4a4dd67038763eac065b1a796
-$age                    - https://gyazo.com/5eb6f9ca70abf167d43d86716b442fed
-$ctt                    - https://gyazo.com/4e56c5ced386b2068b83e82c804460ce
-$setctt                 - https://gyazo.com/af080c409e7b0b2cb86aaa03efcf39cc
-$sessionfollows         - https://gyazo.com/a2710f2b0acac6317e9c72c06b96f183
-$lastfollow             - https://gyazo.com/01d308e6bf46500f340eb49f524816aa
-$torand                 - https://gyazo.com/ba07e41cecddd874fc62f48b46d31f46
-$sound(FILE.FORMAT)     - https://gyazo.com/cb2924f03ae3533f2b669153ff1fb5ee
-$gif(<LINK>,<DURATION>) - https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
+	$weather(LOCATION)      - https://gyazo.com/4fcac95d7d53e21f12626ac81012156a
+	$followage		- 
+	$followdate		- 
+	$avatar      		- 
+	$touser                 - https://gyazo.com/7d6e92ff518d6a50408fa4045837533e
+	$viewers                - https://gyazo.com/d5b2326f27942e96004e3c0de6a7c418
+	$views                  - https://gyazo.com/6bf432a42acb0370e6efe5aadec94b26
+	$subemotes              - https://gyazo.com/8547dc9c51e289592ba1879b6e76f891
+	$bttvemotes             - https://gyazo.com/165fa45bc2fc8fe87f349ed87a72e066
+	$ffzemotes              - https://gyazo.com/93aff00a158696f0785fd3ca938cf51b
+	$latestyt               - https://gyazo.com/dcc686bd7ff6f37b4d71b6fec33e2788
+	$latesttweet            - https://gyazo.com/bca763e4a4dd67038763eac065b1a796
+	$age                    - https://gyazo.com/5eb6f9ca70abf167d43d86716b442fed
+	$ctt                    - https://gyazo.com/4e56c5ced386b2068b83e82c804460ce
+	$setctt                 - https://gyazo.com/af080c409e7b0b2cb86aaa03efcf39cc
+	$sessionfollows         - https://gyazo.com/a2710f2b0acac6317e9c72c06b96f183
+	$lastfollow             - https://gyazo.com/01d308e6bf46500f340eb49f524816aa
+	$torand                 - https://gyazo.com/ba07e41cecddd874fc62f48b46d31f46
+	$sound(FILE.FORMAT)     - https://gyazo.com/cb2924f03ae3533f2b669153ff1fb5ee
+	$sync			- https://ibb.co/b9V20L or https://ibb.co/iqJi70 (no video)
+	$gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
+	$giphy(<SEARCH TERM>,<DURATION>)	- https://ibb.co/exwLn0	
+	$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)	- https://ibb.co/cJAPEf
+	$movie(<LINK>,<START TIME>,<DURATION>)	- https://ibb.co/cHP6S0
 
 #############################
 #   Modified  Parameters    #
@@ -188,11 +188,11 @@ $gif(<LINK>,<DURATION>) - https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
 
 Customizable version of parameters already existing in the bot.
 
-$ctime          - Like $time but using the format set in the UI
-$cdate          - Like $date but using the format set in the UI
-$cranduser      - Like $randuser but allows for exclusions, added in the UI
-$ctarget	- Works just like $target but ignores @ infront of usernames
-$chours		- Return the amount of hours for user or target as a whole number without comma period or space
+	$ctime          - Like $time but using the format set in the UI
+	$cdate          - Like $date but using the format set in the UI
+	$cranduser      - Like $randuser but allows for exclusions, added in the UI
+	$ctarget	- Works just like $target but ignores @ infront of usernames
+	$chours		- Return the amount of hours for user or target as a whole number without comma period or space
 
 #############################
 #    Nightbot Parameters    #
@@ -201,13 +201,13 @@ $chours		- Return the amount of hours for user or target as a whole number witho
 Parameters used in nightbot, doesn't offer anything new.
 These are added mainly to allow copy pasting commands.
 
-$(user)
-$(touser)
-$(query)
-$(querystring)
-$(weather LOCATION)
-$(urlfetch API)
-$(time TIMEZONE)
+	$(user)
+	$(touser)
+	$(query)
+	$(querystring)
+	$(weather LOCATION)
+	$(urlfetch API)
+	$(time TIMEZONE)
 
 #############################
 # StreamElements Parameters #
@@ -216,25 +216,25 @@ $(time TIMEZONE)
 Parameters used in StreamElements, doesn't offer anything new.
 These are added mainly to allow copy pasting commands or from importing
 
-${user}
-${user.name}
-${user.points}
-${user.points_rank}
-${user.time_online}
-${user.time_online_rank}
-${sender}
-${source}
-${title}
-${status}
-${game}
-${pointsname}
-${channel}
-${channel.viewers}
-${channel.views}
-${channel.followers}
-${channel.subs}
-${random.chatter}
-${uptime}
+	${user}
+	${user.name}
+	${user.points}
+	${user.points_rank}
+	${user.time_online}
+	${user.time_online_rank}
+	${sender}
+	${source}
+	${title}
+	${status}
+	${game}
+	${pointsname}
+	${channel}
+	${channel.viewers}
+	${channel.views}
+	${channel.followers}
+	${channel.subs}
+	${random.chatter}
+	${uptime}
 
 #############################
 #    Deepbot Parameters     #
@@ -243,26 +243,26 @@ ${uptime}
 Parameters used in Deepbot, doesn't offer anything new.
 These are added mainly to allow copy pasting commands or from importing
 
-@user@
-@viewers@
-@time@
-@time24@
-@title@
-@pointsname@
-@target@
-@pointstolevelup@
-@randomuser@
-@points@
-@intpoints@
-@hrstolevelup@
-@hours@
-@getcounter@
-@game@
-@followers@
-@counter@
-@followdate@
-@subs@
-@customapi@
+	@user@
+	@viewers@
+	@time@
+	@time24@
+	@title@
+	@pointsname@
+	@target@
+	@pointstolevelup@
+	@randomuser@
+	@points@
+	@intpoints@
+	@hrstolevelup@
+	@hours@
+	@getcounter@
+	@game@
+	@followers@
+	@counter@
+	@followdate@
+	@subs@
+	@customapi@
 
 #############################
 #   Phantombot Parameters   #
@@ -271,45 +271,45 @@ These are added mainly to allow copy pasting commands or from importing
 Parameters used in Phantombot, doesn't offer anything new.
 These are added mainly to allow copy pasting commands or from importing.
 
-(sender)
-(@sender)
-(touser)
-(pointtouser)
-(currenttime)
-(#)
-(1) - (9)
-(random)
-(pointname)
-(uptime)
-(game)
-(status)
-(viewers)
-(follows)
-(count)
-(senderrank)
-(readfile FILEPATH/FILE.txt)
-(readfilerand FILEPATH/FILE.txt)
-(echo)
-(titleinfo)
-(gameinfo)
-(channelname)
-(subscribers)
-(age)
+	(sender)
+	(@sender)
+	(touser)
+	(pointtouser)
+	(currenttime)
+	(#)
+	(1) - (9)
+	(random)
+	(pointname)
+	(uptime)
+	(game)
+	(status)
+	(viewers)
+	(follows)
+	(count)
+	(senderrank)
+	(readfile FILEPATH/FILE.txt)
+	(readfilerand FILEPATH/FILE.txt)
+	(echo)
+	(titleinfo)
+	(gameinfo)
+	(channelname)
+	(subscribers)
+	(age)
 
 #############################
 #    Wizebot  Parameters    #
 #############################
 
-$(channel_name)
-$(random_viewer)
-$random(min,max)
-$(current_game)
-$(current_viewers)
-$(todayFollow)
-$(last_follow_name)
-$(session_followers)
-$(follow_count)
-$(sub_count)
+	$(channel_name)
+	$(random_viewer)
+	$random(min,max)
+	$(current_game)
+	$(current_viewers)
+	$(todayFollow)
+	$(last_follow_name)
+	$(session_followers)
+	$(follow_count)
+	$(sub_count)
 
 ## Installation
 ### Prerequisites
