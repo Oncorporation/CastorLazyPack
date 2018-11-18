@@ -321,6 +321,11 @@ This will install the script, right click the script and "Insert API Key" and yo
 
 If you want to use the optional overlay, connect your OBS as a browser source to Index.html
 
+###In your OBS browser source, set the custom css to:
+
+body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }
+img,video {width:100%;}
+
 ## Usage
 ### Commandline Syntax
 While every possible option is available via the script's UI, the most important 
