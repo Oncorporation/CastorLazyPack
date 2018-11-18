@@ -88,7 +88,7 @@ if( window.WebSocket ){
                 video.load();
                 video.play();
                 video.removeChild(source);
-                addClass(youtube,'hidden')
+                addClass(video,'hidden')
              }, MySet.duration);
         }
 
