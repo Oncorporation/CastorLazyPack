@@ -23,6 +23,7 @@ Extra $parameters and !sr info when missing id/url
             - look up the encoded string id of a you tube to display
             - use 5 for 5 seconds
         - Added variables and UI items to support
+	- Added $sync command
 
         - Updated client.js, index.html to support new features
 
@@ -143,7 +144,15 @@ $sessionfollows - Show amount of follows for current session
 $lastfollow     - Returns name of last follower
 $torand         - Returns target and random user if no target is present
 $sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
+$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>, <START TIME>) - counts down to sync players in various games, set the message, 
+	optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
 $gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
+$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
+$movie(<LINK>,<START TIME>, <DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds,
+	link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
+$movyt(<YOUTUBE ID>,<START TIME>, <DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> 
+	for <DURATION> seconds. 
+	Example $movyt(Vz7SS2qh-6k, 45, 15) plays https://www.youtube.com/watch?v=Vz7SS2qh-6k from 45 seconds for 15 seconds
 $default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
 
