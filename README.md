@@ -2,7 +2,8 @@
 
 **Latest Version:** 1.4
 
-**Download:** [CastorrsLazyPack1.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/1.4/CastorrsLazyPack1.4.zip)
+**Download:** [CastorrsLazyPack1.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.zip)
+**Updated:** Charles Fettinger 2018-11-17
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
