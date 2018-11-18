@@ -12,27 +12,27 @@ Extra $parameters and !sr info when missing id/url
 
 ## Update History
     1.4
-        - Added $giphy(<SEARCH TERM>,<DURATION>) 
-            - looks up random giphy via API
-            - use 5 for 5 seconds
-        - Added Button to look up giphy API key
-        - Added text for giphy fail over gif
-        - Added base giphy url variable
-        - Added $movie(<LINK>,<START TIME>,<DURATION>) 
-            - use 5 for 5 seconds
-        - Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
-            - look up the encoded string id of a you tube to display
-            - use 5 for 5 seconds
-	- Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) command
-        - Added variables and UI items to support
+	- Added $giphy(<SEARCH TERM>,<DURATION>) 
+	    - looks up random giphy via API
+	    - use 5 for 5 seconds
+	- Added variables and UI items to support new command
+		- Added Button to look up giphy API key
+		- Added text for giphy fail over gif
+		- Added base giphy url variable
+	- Added $movie(<LINK>,<START TIME>,<DURATION>) 
+	    - use 5 for 5 seconds
+	- Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
+	    - look up the encoded string id of a you tube to display
+	    - use 5 for 5 seconds
+	- Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>)
 
-        - Updated client.js, index.html to support new features
+	- Updated client.js, index.html to support new features
 
     1.3
-    	- Updated due to v2 having compatibility issues for some users
-    	- Added $label(textfile)
-    	- Removed $sessionfollows
-    	- Removed $lastfollow
+	- Updated due to v2 having compatibility issues for some users
+	- Added $label(textfile)
+	- Removed $sessionfollows
+	- Removed $lastfollow
 
     1.1.2
 	- Added option to select service in settings
@@ -55,7 +55,6 @@ Extra $parameters and !sr info when missing id/url
 	- Removed (1) to (9) because they broke built in parameters
 	- Improved compability for gif links
 
-
     1.0.14
 	- Fixed api's using $mychannel
 	- Removed $touser as it's built in now
@@ -75,12 +74,11 @@ Extra $parameters and !sr info when missing id/url
 
     1.0.1.0
 	- Changed filesystem to work with Streamlabs Chatbot
-        - Changed YouTube username to ID so it works for everyone
-	- 
+	- Changed YouTube username to ID so it works for everyone
 
     1.0.0.9
-        - Fixed $setctt and $age
-        - Added example commands to readme.txt
+	- Fixed $setctt and $age
+	- Added example commands to readme.txt
 
     1.0.0.8
         - Updated to work with Streamlabs Chatbot
@@ -89,35 +87,35 @@ Extra $parameters and !sr info when missing id/url
         - Fixed $(querystring)
 
     1.0.0.6
-        - Added $sound parameter
-        - Added $gif parameter
-        - Added index.html for overlay
-        - Added volume setting in UI for sound levels
+	- Added $sound parameter
+	- Added $gif parameter
+	- Added index.html for overlay
+	- Added volume setting in UI for sound levels
 
     1.0.0.5
-        - Added $torand parameter
+	- Added $torand parameter
 
     1.0.0.4
-        - Bugfix for $ctime and $cdate
+	- Bugfix for $ctime and $cdate
 
     1.0.0.3
-        - Added $sessionfollows
-        - Added $lastfollow
-        - Added WizeBot parameters
+	- Added $sessionfollows
+	- Added $lastfollow
+	- Added WizeBot parameters
 
     1.0.0.2
-        - Added $ctt parameter
-        - Added $setctt parameter
+	- Added $ctt parameter
+	- Added $setctt parameter
 
     1.0.0.1
-        - Added StreamElements parameters
-        - Added Deepbot parameters
-        - Added Phantombot parameters
-        - Fixed $urban parameter
-        - Added $age parameter
+	- Added StreamElements parameters
+	- Added Deepbot parameters
+	- Added Phantombot parameters
+	- Fixed $urban parameter
+	- Added $age parameter
 
     1.0.0.0 
-        - Initial release
+	- Initial release
         
 ### How does it work?
 #############################
@@ -144,7 +142,7 @@ Completely new parameters, most of them are doable through api calls.
 	$sessionfollows - Show amount of follows for current session
 	$lastfollow     - Returns name of last follower
 	$torand         - Returns target and random user if no target is present
-	$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
+	$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder.
 	$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) - counts down to sync players in various games, set the message, optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
 	$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
 	$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
