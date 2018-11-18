@@ -487,7 +487,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         """Parent.Log("sync","-enter-")"""
         Parent.SendStreamMessage("Sync in:")
         result = RegSync.search(parseString)
-        Parent.Log("sync reg",result.group(0))
+        #Parent.Log("sync reg",result.group(0))
         if result:
             fullSync = result.group(0)
             count = int(result.group("countdown"))
