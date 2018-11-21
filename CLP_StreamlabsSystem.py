@@ -483,6 +483,9 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         else:
             parseString = parseString.replace("$weather(", WeatherApi.format("metric"))
 
+    """ $sync(message, countdown, youtubeid, start time)
+        $sync(Click Launch!, 3, Vz7SS2qh-6k, 50)
+    """
     if "$sync(" in parseString:
         """Parent.Log("sync","-enter-")"""
         Parent.SendStreamMessage("Sync in:")
@@ -1052,9 +1055,9 @@ RegMovie = re.compile(r"(?:\$mov..\([\ ]*(?P<link>[^\"\'\,]+)"
                     r"[\ ]*\,[\ ]*(?P<start>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
 RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<countdown>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<starttime>[^\"\']*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<countdown>\d+)"
+                    r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<starttime>\d*)[\ ]*\))", re.U)
 RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)
