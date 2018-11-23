@@ -11,22 +11,22 @@ This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
-    1.4
-	- Added $giphy(<SEARCH TERM>,<DURATION>) 
-	    - looks up random giphy via API
-	    - use 5 for 5 seconds
-	- Added variables and UI items to support new command
-		- Added Button to look up giphy API key
-		- Added text for giphy fail over gif
-		- Added base giphy url variable
-	- Added $movie(<LINK>,<START TIME>,<DURATION>) 
-	    - use 5 for 5 seconds
-	- Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
-	    - look up the encoded string id of a you tube to display
-	    - use 5 for 5 seconds
-	- Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>)
+    1.4 by Charles Fettinger 2018-11-17
+    - Added $giphy(<SEARCH TERM>,<DURATION>) 
+        - looks up random giphy via API
+        - use 5 for 5 seconds
+    - Added Button to look up giphy API key
+    - Added text for giphy fail over gif
+    - Added base giphy url variable
+    - Added $movie(<LINK>,<START TIME>,<DURATION>) 
+        - use 5 for 5 seconds
+    - Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
+        - look up the encoded string id of a you tube to display
+        - use 5 for 5 seconds
+    - Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) command
+    - Added variables and UI items to support
 
-	- Updated client.js, index.html to support new features
+    - Updated client.js, index.html to support new features
 
     1.3
 	- Updated due to v2 having compatibility issues for some users
