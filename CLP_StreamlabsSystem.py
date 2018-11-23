@@ -19,7 +19,7 @@ import time
 import urllib
 import clr
 import random
-sys.path.append(os.path.join(os.path.dirname(__file__), "Modules"))
+
 clr.AddReference('System.Windows.Forms')
 from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
@@ -27,10 +27,11 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Contributor = "Surn"
 Version = "1.4"
 Description = "Right click -> insert api key | Extra parameters!"
-Website = "https://www.twitch.tv/castorr91 https://www.twitch.tv/surn"
+
+Contributor = "Surn @ https://www.twitch.tv/surn"
+Website = "https://www.twitch.tv/castorr91"
 #---------------------------------------
 # Versions
 #---------------------------------------
@@ -47,7 +48,7 @@ Website = "https://www.twitch.tv/castorr91 https://www.twitch.tv/surn"
     - Removed $lastfollow
 
 Version infomation for older versions
-   can be found in the readme.md
+   can be found in the readme.txt
 """
 #---------------------------------------
 # [Optional] Settings functions

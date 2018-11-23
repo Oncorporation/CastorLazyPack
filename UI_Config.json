@@ -3,7 +3,7 @@
   "service": {
     "type": "dropdown",
     "value": "Twitch",
-    "items": [ "Twitch", "Mixer", "Youtube" ],
+    "items": ["Twitch", "Mixer", "Youtube" ],
     "label": "Sreaming Service",
     "tooltip": "Service you are streaming on. Used for certain parameters that's platform based like $followage!",
     "group": "General"
@@ -13,35 +13,35 @@
     "value": false,
     "label": "DeepBot parameters",
     "tooltip": "enable or disable Streamelements parameters",
-    "group": "General"
+    "group": "Parameters from other Bots"
   },
   "nightbot": {
     "type": "checkbox",
     "value": false,
     "label": "Nightbot parameters",
     "tooltip": "enable or disable Nightbot parameters",
-    "group": "General"
+    "group": "Parameters from other Bots"
   },
   "phantombot": {
     "type": "checkbox",
     "value": false,
     "label": "Phantombot parameters",
     "tooltip": "enable or disable Streamelements parameters",
-    "group": "General"
+    "group": "Parameters from other Bots"
   },
   "streamelements": {
     "type": "checkbox",
     "value": false,
     "label": "StreamElements parameters",
     "tooltip": "enable or disable Streamelements parameters",
-    "group": "General"
+    "group": "Parameters from other Bots"
   },
   "wizebot": {
     "type": "checkbox",
     "value": false,
     "label": "WizeBot parameters",
     "tooltip": "enable or disable Streamelements parameters",
-    "group": "General"
+    "group": "Parameters from other Bots"
   },
   "imperial": {
     "type": "checkbox",
@@ -91,42 +91,42 @@
     "value": "",
     "label": "Giphy Image Url",
     "tooltip": "Base Image Url for Giphy Images",
-    "group": "General"
+    "group": "Giphy"
   },
     "giphyfailid": {
     "type": "textbox",
     "value": "",
     "label": "Giphy ID for complete search failure",
     "tooltip": "find a giphy id that is an epic failure!",
-    "group": "General"
+    "group": "Giphy"
   },
     "language": {
     "type": "textbox",
     "value": "",
     "label": "Language",
     "tooltip": "Languages available: https://developers.giphy.com/docs#language-support,",
-    "group": "General"
+    "group": "Giphy"
   },
     "giphyrating": {
     "type": "textbox",
     "value": "",
     "label": "Giphy Rating",
     "tooltip": "Ratings: Y, G, PG, PG-13, R",
-    "group": "General"
+    "group": "Giphy"
   },
   "giphytype": {
     "type": "textbox",
     "value": "gifs",
     "label": "Giphy Results Type",
     "tooltip": "Do you want 'gifs' or 'stickers'",
-    "group": "General"
+    "group": "Giphy"
   },
   "giphyapikey": {
     "type": "textbox",
     "value": "",
     "label": "Giphy Api Key",
     "tooltip": "Api Key used for the Giphy related parameters \r\n Press the button below to locate your Giphy Api Key!",
-    "group": "General"
+    "group": "Giphy"
   },
   "locategiphyapikey": {
     "type": "button",
@@ -134,7 +134,7 @@
     "tooltip": "Opens website to locate you Giphy Api Key",
     "function": "LocateGiphy",
     "wsevent": "",
-    "group": "General"
+    "group": "Giphy"
   },
   "openreadme": {
     "type": "button",

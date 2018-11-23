@@ -1,15 +1,16 @@
-Castorr's Lazy Pack
-Latest Version: 1.4
+###########################
+#  Castorr's Lazy Pack    #
+###########################
 
-Download: CastorrsLazyPack1.4.zip
+Description: Extra $parameters and !sr info when missing id/url
+Made By: Castorr91
+Website: https://www.twitch.tv/castorr91
+Contribution by: Surn @ https://www.twitch.tv/Surn
 
-Updated: Charles Fettinger 2018-11-17
-
-Synopsis
-This script is a plugin for the Streamlabs Chatbot. Extra $parameters and !sr info when missing id/url
-
-Update History
-1.4
+#############################
+#         Versions          #
+#############################
+1.4 by Charles Fettinger 2018-11-17
     - Added $giphy(<SEARCH TERM>,<DURATION>) 
         - looks up random giphy via API
         - use 5 for 5 seconds
@@ -21,7 +22,7 @@ Update History
     - Added $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)
         - look up the encoded string id of a you tube to display
         - use 5 for 5 seconds
-- Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) command
+    - Added $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) command
     - Added variables and UI items to support
 
     - Updated client.js, index.html to support new features
@@ -116,10 +117,9 @@ Update History
 
 1.0.0.0 
     - Initial release
-How does it work?
-#############################
 
-New Parameters
+#############################
+#      New  Parameters      #
 #############################
 
 Completely new parameters, most of them are doable through api calls.
@@ -149,10 +149,12 @@ $giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SE
 $movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
 $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
 $default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
+
+
+#############################
+#     Example Commands      #
 #############################
 
-Example Commands
-#############################
 
 $weather(LOCATION)      - https://gyazo.com/4fcac95d7d53e21f12626ac81012156a
 $followage		- 
@@ -178,9 +180,9 @@ $gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
 $giphy(<SEARCH TERM>,<DURATION>)	- https://ibb.co/exwLn0	
 $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)	- https://ibb.co/cJAPEf
 $movie(<LINK>,<START TIME>,<DURATION>)	- https://ibb.co/cHP6S0
-#############################
 
-Modified Parameters
+#############################
+#   Modified  Parameters    #
 #############################
 
 Customizable version of parameters already existing in the bot.
@@ -190,12 +192,13 @@ $cdate          - Like $date but using the format set in the UI
 $cranduser      - Like $randuser but allows for exclusions, added in the UI
 $ctarget	- Works just like $target but ignores @ infront of usernames
 $chours		- Return the amount of hours for user or target as a whole number without comma period or space
+
+#############################
+#    Nightbot Parameters    #
 #############################
 
-Nightbot Parameters
-#############################
-
-Parameters used in nightbot, doesn't offer anything new. These are added mainly to allow copy pasting commands.
+Parameters used in nightbot, doesn't offer anything new. 
+These are added mainly to allow copy pasting commands.
 
 $(user)
 $(touser)
@@ -204,12 +207,13 @@ $(querystring)
 $(weather LOCATION)
 $(urlfetch API)
 $(time TIMEZONE)
+
+#############################
+# StreamElements Parameters #
 #############################
 
-StreamElements Parameters
-#############################
-
-Parameters used in StreamElements, doesn't offer anything new. These are added mainly to allow copy pasting commands or from importing
+Parameters used in StreamElements, doesn't offer anything new.
+These are added mainly to allow copy pasting commands or from importing
 
 ${user}
 ${user.name}
@@ -230,12 +234,13 @@ ${channel.followers}
 ${channel.subs}
 ${random.chatter}
 ${uptime}
+
+#############################
+#    Deepbot Parameters     #
 #############################
 
-Deepbot Parameters
-#############################
-
-Parameters used in Deepbot, doesn't offer anything new. These are added mainly to allow copy pasting commands or from importing
+Parameters used in Deepbot, doesn't offer anything new.
+These are added mainly to allow copy pasting commands or from importing
 
 @user@
 @viewers@
@@ -257,12 +262,13 @@ Parameters used in Deepbot, doesn't offer anything new. These are added mainly t
 @followdate@
 @subs@
 @customapi@
+
+#############################
+#   Phantombot Parameters   #
 #############################
 
-Phantombot Parameters
-#############################
-
-Parameters used in Phantombot, doesn't offer anything new. These are added mainly to allow copy pasting commands or from importing.
+Parameters used in Phantombot, doesn't offer anything new.
+These are added mainly to allow copy pasting commands or from importing.
 
 (sender)
 (@sender)
@@ -288,9 +294,9 @@ Parameters used in Phantombot, doesn't offer anything new. These are added mainl
 (channelname)
 (subscribers)
 (age)
-#############################
 
-Wizebot Parameters
+#############################
+#    Wizebot  Parameters    #
 #############################
 
 $(channel_name)
@@ -325,8 +331,7 @@ While every possible option is available via the script's UI, the most important
 There is an entire help channel set up to help you
 
 #########################################
-
-All my scripts can be found in
-the Streamlabs Chatbot discord
-https://discordapp.com/invite/J4QMG5m
+#    All my scripts can be found in     #
+#    the Streamlabs Chatbot discord     #
+# https://discordapp.com/invite/J4QMG5m #
 #########################################
