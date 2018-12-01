@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4"
+Version = "1.4.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.1 by Charles Fettinger 2018-11-30
+    - Fixed !movie to use data uri - you can now use local files!
+
 1.4
     - Added $giphy, $movie and $movyt commands
     - updated index.html and client.js to use the API_KEY 
@@ -254,9 +257,7 @@ def GetDataURI(link, filetype):
         prefix = "data:" + filetype + "/" + ext + ";base64,"
         with open(pathname, "rb") as file:
             url = prefix + base64.b64encode(file.read())
-        #url = "file:" + urllib.pathname2url(pathname)
-    
-    Parent.Log("GLFp", url)
+        #url = "file:" + urllib.pathname2url(pathname)    
     return url
 
 def GetApiData(link):
@@ -601,12 +602,12 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             pathResult = RegPath.search(movLink)
             if pathResult:
                 movType = "video/" + pathResult.group("ext")
-                Parent.Log("movie ext", movType)
+                #Parent.Log("movie ext", movType)
 
             pathResult = RegIsPath.search(movLink)
             Parent.Log("movie path", movLink)
             if pathResult:
-                Parent.Log("movie Params", "getting data URI")
+                #Parent.Log("movie Params", "getting data URI")
                 useURI = True
                 movLink = GetDataURI(movLink,"video") 
 
