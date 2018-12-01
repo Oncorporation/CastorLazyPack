@@ -69,8 +69,21 @@ if( window.WebSocket ){
             var video = document.getElementById('mymov');
             var source = document.createElement('source');
 
-            source.setAttribute('src',  MySet.link + "#t=" + MySet.start);
-            console.log("got movie " + MySet.link + "#t=" + MySet.start)
+/*            if (!MySet.link.includes("http"))
+            {
+                var URL = window.URL || window.webkitURL
+                MySet.link = URL.createObjectURL(MySet.Link)
+            }*/
+            if(MySet.uri)
+            {
+                source.setAttribute('src',  MySet.link );
+            }
+            else
+            {
+                source.setAttribute('src',  MySet.link + "#t=" + MySet.start);
+            }
+            source.setAttribute('type',  MySet.type);
+            console.log("got movie " + MySet.type + "#t=" + MySet.start)
 
             video.appendChild(source);
             video.addEventListener('loadedmetadata', function() {

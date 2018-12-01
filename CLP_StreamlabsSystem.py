@@ -19,6 +19,7 @@ import time
 import urllib
 import clr
 import random
+import base64
 
 clr.AddReference('System.Windows.Forms')
 from System.Windows.Forms import WebBrowser, Form, DockStyle
@@ -242,6 +243,21 @@ def GetTextFileContent(textfile):
             return f.readline().strip()
     except FileNotFoundError:
         return ""
+
+def GetDataURI(link, filetype):
+    """Gets the data URI if the link is a local file, else returns original link """
+    url= link
+    result = RegPath.search(link)
+    if result:
+        pathname = result.group("pathname")
+        ext = result.group("ext")
+        prefix = "data:" + filetype + "/" + ext + ";base64,"
+        with open(pathname, "rb") as file:
+            url = prefix + base64.b64encode(file.read())
+        #url = "file:" + urllib.pathname2url(pathname)
+    
+    Parent.Log("GLFp", url)
+    return url
 
 def GetApiData(link):
     """Convert string to dict from the api"""
@@ -574,6 +590,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
     """
     if "$movie(" in parseString:   
         #Parent.Log("movie Result", parseString)
+        useURI = False
         result = RegMovie.search(parseString)
 
         if result:                
@@ -581,11 +598,22 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movDuration = int(result.group("duration"))
             movStart = int(result.group("start"))                    
             movLink = result.group("link")
+            pathResult = RegPath.search(movLink)
+            if pathResult:
+                movType = "video/" + pathResult.group("ext")
+                Parent.Log("movie ext", movType)
+
+            pathResult = RegIsPath.search(movLink)
+            Parent.Log("movie path", movLink)
+            if pathResult:
+                Parent.Log("movie Params", "getting data URI")
+                useURI = True
+                movLink = GetDataURI(movLink,"video") 
 
             #Parent.Log("movie Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
         
             #broadcast movie url 
-            f = {"link": movLink, "start": movStart, "duration": movDuration*1000}
+            f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
             Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
 
             parseString = "Playing for " + str(movDuration) + " seconds" #movLink #parseString.replace(fullGif, "")
@@ -1063,6 +1091,9 @@ RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)
 RegLabel = re.compile(r"(?:\$label\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
+RegPath = re.compile(r"^(.*/)?(?P<pathname>$|(.+?)(?P<ext>([^.]*$)|$))", re.U)
+RegIsPath = re.compile(r"\A(?:(?:[a-zA-Z]:|\\\\[a-zA-Z0-9_.$\●-]+\\[a-zA-Z0-9_.$\●-]+)\\|\\?[^\\/:*?\"<>|\r\n]+\\?)(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*\Z", re.U)
+
 
 #---------------------------------------
 # Settings class
