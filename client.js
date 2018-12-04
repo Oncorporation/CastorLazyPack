@@ -90,6 +90,7 @@ if( window.WebSocket ){
               this.currentTime = MySet.start;
             }, false);
             removeClass(video,'hidden')
+	    video.setAttribute('muted', false);
             
             video.autoplay = true;
             //video.get(0).play();
@@ -102,6 +103,7 @@ if( window.WebSocket ){
                 video.play();
                 video.removeChild(source);
                 addClass(video,'hidden')
+		video.setAttribute('muted', true);
              }, MySet.duration);
         }
 
