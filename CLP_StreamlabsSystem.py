@@ -37,8 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
-1.4.1 by Charles Fettinger 2018-11-30
+1.4.11 by Charles Fettinger 2018-12-03
     - Fixed !movie to use data uri - you can now use local files!
+    - Fixed a muted bug in !movie
 
 1.4
     - Added $giphy, $movie and $movyt commands
