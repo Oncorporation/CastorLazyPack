@@ -89,22 +89,22 @@ if( window.WebSocket ){
             video.addEventListener('loadedmetadata', function() {
               this.currentTime = MySet.start;
             }, false);
-            removeClass(video,'hidden')
-	    video.setAttribute('muted', false);
+            removeClass(video,'hidden');
+	        video.muted = false;
             
             video.autoplay = true;
             //video.get(0).play();
             video.play();
 
-             setTimeout(function() {
+            setTimeout(function() {
                 video.pause();    
                 source.removeAttribute('src'); // empty source
                 video.load();
                 video.play();
                 video.removeChild(source);
-                addClass(video,'hidden')
-		video.setAttribute('muted', true);
-             }, MySet.duration);
+                addClass(video,'hidden');
+                video.muted = true;
+            }, MySet.duration);
         }
 
         if(jsonObject.event == "EVENT_YUT")
