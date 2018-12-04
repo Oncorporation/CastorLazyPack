@@ -11,7 +11,7 @@ This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
-	1.4.1 by Charles Fettinger 2018-12-03
+	1.4.11 by Charles Fettinger 2018-12-03
 	- Fixed !movie to use data uri - you can now use local files!
     - Fixed a muted bug in !movie
 	
