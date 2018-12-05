@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.1"
+Version = "1.4.2"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,14 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.2 by Charles Fettinger 2018-12-04
+    - Added Twitch Clip support 
+        !movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>) 
+        - look up the Slug at the end of any Twitch Clip (https://clips.twitch.tv/ThisIsTheSlug)
+        - use 5 for 5 seconds
+    - Updated GUI for Twitch API and Twitch Base Url
+    - Updated Readme documentation
+
 1.4.11 by Charles Fettinger 2018-12-03
     - Fixed !movie to use data uri - you can now use local files!
     - Fixed a muted bug in !movie
@@ -156,6 +164,11 @@ def IRLFAQ():
     link = "https://help.twitch.tv/customer/portal/articles/2672652-irl-faq"
     OpenLink(link)
 
+def DevDashboard():
+    """Open twitch Developer Dashboard"""
+    link = "https://dev.twitch.tv/dashboard"
+    OpenLink(link)
+
 def HelpCenter():
     """Open twitch help center"""
     OpenLink("https://help.twitch.tv/")
@@ -266,6 +279,90 @@ def GetApiData(link):
     response = Parent.GetRequest(link, {})
     response = ast.literal_eval(response)
     return response['response']
+
+def GetApiDataCount(link, header = {}):
+    """Get the total number of data nodes"""
+    totalcount = 0
+    fail = "fail"
+    false = False
+    true = True
+    Parent.Log("CLP GADC", "header:" + str(header) + " link:"+ link)
+    try:        
+        response = Parent.GetRequest(link, header)
+        Parent.Log("CLP GADC", response)
+        try:
+            responsedata = json.loads(response['response'])
+            Parent.Log("CLP GADC loads", responsedata)
+            data = json.loads(responsedata['data'])
+            totalcount = len(data)
+            Parent.Log("CLP GADC json", str(data))
+        except:
+            Parent.Log("CLP GADC lit", "json failed")
+            response = ast.literal_eval(response)
+            responsedata = response['response']
+            data = ast.literal_eval(responsedata)            
+            Parent.Log("CLP GADC thumb ", data['data'][0]['thumbnail_url'])
+            totalcount = len(data['data'])     
+    except:
+        Parent.Log("CLP GADC","failure " + "header:" + header + " link:"+ link)
+    finally:
+        return totalcount
+
+def GetApiTwitchLink(link, header = {}):
+    """Get the twitch movie link from the data nodes"""
+    apilink = ""
+    fail = "fail"
+    false = False
+    true = True
+    Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
+    try:        
+        response = Parent.GetRequest(link, header)
+        Parent.Log("CLP GATL", response)
+        try:
+            responsedata = json.loads(response['response'])
+            Parent.Log("CLP GATL loads", responsedata)
+            data = json.loads(responsedata['data'])            
+            Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+        except:
+            Parent.Log("CLP GATL lit", "json failed")
+            response = ast.literal_eval(response)
+            responsedata = response['response']
+            data = ast.literal_eval(responsedata)
+            Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+        
+        if(len(data['data'][0]['thumbnail_url']) > 2):
+            apilink = data['data'][0]['thumbnail_url'].replace("-preview-480x272.jpg",".mp4") 
+        Parent.Log("CLP GATL",apilink)      
+    except:
+        Parent.Log("CLP GATL","failure " + "header:" + header + " link:"+ link)
+    finally:
+        return apilink
+
+def GetApiTwitchDictionary(link, header = {}):
+    """Get the dictionary of data nodes"""  
+    data = {}  
+    fail = "fail"
+    false = False
+    true = True
+    Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
+    try:        
+        response = Parent.GetRequest(link, header)
+        #Parent.Log("CLP GATL", response)
+        try:
+            responsedata = json.loads(response['response'])
+            #Parent.Log("CLP GATL loads", responsedata)
+            data = json.loads(responsedata['data'])            
+            #Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+        except:
+            Parent.Log("CLP GATL lit", "json failed")
+            response = ast.literal_eval(response)
+            responsedata = response['response']
+            data = ast.literal_eval(responsedata)
+            #Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+    except:
+        Parent.Log("CLP GATL","failure " + "header:" + header + " link:"+ link)
+    finally:
+        return data
 
 def GetApiGiphyTotalCount(link, search):
 	# Get the total number of giphy results for current search term
@@ -585,6 +682,44 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             parseString = "Playing for " + str(movDuration) + " seconds" #movLink #parseString.replace(fullGif, "")
         else:
             parseString = "[ERROR: Seems like you have a space in the () or forgot to set a paremter]"
+
+    """Plays a Twitch Clip in html 5
+       $movtw(id, start seconds, duration seconds) 
+       $movtw(BlushingVastFloofPeteZaroll,10,20)
+    """
+    if "$movtw(" in parseString:
+        useURI = False
+        random.seed()
+        if (MySet.twitchapikey == ""):
+            parseString =  "[Error: Twitch Api Key is not found]"
+        else:
+            result = RegMovie.search(parseString)
+            if result:
+                fullMov = result.group(0)
+                movDuration = int(result.group("duration"))
+                movStart = int(result.group("start"))                    
+                movLink = result.group("link")
+                header = {"Client-ID": MySet.twitchapikey}
+                totalcount = GetApiDataCount(ClipsApi.format(movLink), header)
+                movType = "video/mp4"
+                Parent.Log("twitch tcount",str(totalcount))
+                if (totalcount > 0):
+                    """limit results to top 20, otherwise offset is inaccurate to search term"""
+                    if (totalcount > 20):
+                        totalcount = 20
+                    rand = random.randint(0,totalcount)
+                    movLink = GetApiTwitchLink(ClipsApi.format(movLink), header)
+                    if(len(movLink) > 1):
+                        #broadcast twitch clip url 
+                        f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
+                        Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
+
+                        parseString = "Playing for " + str(movDuration) + " seconds" 
+                    else:
+                       parseString = "[ERROR: Movie Clip Not Found]" 
+            else:
+                parseString = "[ERROR: Seems like you have a space in the () or forgot to set a paremter]"
+
 
     """Plays a video in html 5
         $movie(url, start seconds, duration seconds)
@@ -1061,6 +1196,7 @@ RandUserApi = "https://decapi.me/twitch/random_user/$mychannel?exclude={0}"
 SubEmotesApi = "https://decapi.me/twitch/subscriber_emotes/$mychannel"
 ViewersApi = "https://decapi.me/twitch/viewercount/$mychannel"
 ViewsApi = "https://decapi.me/twitch/total_views/$mychannel"
+ClipsApi = "https://api.twitch.tv/helix/clips?id={0}"
 
 #Mixer APIs
 MxAgeApi = "http://mixer.api.scorpstuff.com/joineddate.php?user={0}&timezone=UTC"
@@ -1076,6 +1212,7 @@ WeatherApi = "$readapi(http://api.scorpstuff.com/weather.php?units={0}&city="
 
 #Giphy
 GiphyApi = "http://api.giphy.com/v1/{0}/search?api_key={1}&limit=1&offset={2}&lang={3}&rating={4}&q="
+
 
 #Regex
 RegGif = re.compile(r"(?:\$gif\([\ ]*(?P<link>[^\"\']+)"
@@ -1124,6 +1261,8 @@ class Settings():
             self.imperial = False
             self.volume = 50
             self.ytuser = ""
+            self.twitchapikey = ""
+            self.twitchclipurl = "https://clips-media-assets2.twitch.tv/AT-cm%7C{0}.mp4"
             self.giphyapikey = ""
             self.giphyimageurl = ""
             self.giphyfailid = ""

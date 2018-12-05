@@ -1,16 +1,24 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.4
+**Latest Version:** 1.4.2
 
-**Download:** [CastorrsLazyPack1.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.zip)
+**Download:** [CastorrsLazyPack1.4.2.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.2.zip)
 
-**Updated:** Charles Fettinger 2018-11-17
+**Updated:** Charles Fettinger 2018-12-04
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+	1.4.2 by Charles Fettinger 2018-12-04
+	- Added Twitch Clip support 
+		!movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>) 
+	    - look up the Slug at the end of any Twitch Clip (https://clips.twitch.tv/ThisIsTheSlug)
+        - use 5 for 5 seconds
+    - Updated GUI for Twitch API and Twitch Base Url
+    - Updated Readme documentation
+
 	1.4.11 by Charles Fettinger 2018-12-03
 	- Fixed !movie to use data uri - you can now use local files!
     - Fixed a muted bug in !movie

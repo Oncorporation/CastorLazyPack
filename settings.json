@@ -10,6 +10,8 @@
   "srmessage": "{0} in order to request a song you need to add a song/video ID, url or a search term",
   "excluded": "",
   "ytuser": "UJs2dkKKK92Gmki01IiE2w",
+  "twitchapikey": "x4p1iniqeaifilcj3a4deisimbmhsj",
+  "twitchclipurl": "https://clips-media-assets2.twitch.tv/AT-cm%7C{0}.mp4",
   "giphyapikey": "KBU47FtdqBMZc7yHAcLuyUFyhWwwKqvi",
   "giphyimageurl": "https://i.giphy.com/media/{0}/200w_d.gif",
   "giphyfailid": "u2TrRPK8J6Bwc",

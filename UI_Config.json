@@ -245,7 +245,29 @@
     "function": "IRLFAQ",
     "wsevent": "",
     "group": "Twitch Links"
+  },  
+  "twitchclipurl": {
+    "type": "textbox",
+    "value": "",
+    "label": "Twitch Clip Url base",
+    "tooltip": "Sets the base url for Twitch movies",
+    "group": "Twitch Links"
   },
+  "twitchapikey": {
+    "type": "textbox",
+    "value": "",
+    "label": "Twitch Extension or App Api Key",
+    "tooltip": "Api Key used for the Twitch related parameters \r\n Press the button below to locate your Twitch Api Key!",
+    "group": "Twitch Links"
+  },
+    "DevDashboard": {
+    "type": "button",
+    "label": "Developer Dashboard",
+    "tooltip": "Opens https://dev.twitch.tv/dashboard in the default browser",
+    "function": "DevDashboard",
+    "wsevent": "",
+    "group": "Twitch Links"
+  }, 
   "twitteruser": {
     "type": "textbox",
     "value": "",

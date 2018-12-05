@@ -10,6 +10,14 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.2 by Charles Fettinger 2018-12-04
+    - Added Twitch Clip support 
+        !movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>) 
+        - look up the Slug at the end of any Twitch Clip (https://clips.twitch.tv/ThisIsTheSlug)
+        - use 5 for 5 seconds
+    - Updated GUI for Twitch API and Twitch Base Url
+    - Updated Readme documentation
+    
 1.4.11 by Charles Fettinger 2018-12-03
     - Fixed !movie to use data uri - you can now use local files!
     - Fixed a muted bug in !movie
