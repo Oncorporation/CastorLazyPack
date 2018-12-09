@@ -2,7 +2,7 @@
 
 **Latest Version:** 1.4.3
 
-**Download:** [CastorrsLazyPack1.4.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.3.zip)
+**Download:** [CastorrsLazyPack1.4.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4.3/CastorrsLazyPack1.4.3.zip)
 
 **Updated:** Charles Fettinger 2018-12-08
 
