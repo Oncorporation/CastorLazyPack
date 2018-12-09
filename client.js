@@ -18,7 +18,7 @@ if( window.WebSocket ){
                 "EVENT_GIF","EVENT_MOV", "EVENT_YUT"
             ]
         }
-		//Send your Data to the server
+        //Send your Data to the server
         socket.send(JSON.stringify(auth));
     };
 
@@ -32,8 +32,8 @@ if( window.WebSocket ){
     {
         var jsonObject = JSON.parse(message.data);
 
-		if(jsonObject.event == "EVENT_GIF")
-		{
+        if(jsonObject.event == "EVENT_GIF")
+        {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
             console.log("Parsed" + jsonObject)
@@ -58,7 +58,7 @@ if( window.WebSocket ){
                     addClass(badge,'hidden');
                 }
              }, MySet.duration);
-		}
+        }
 
         if(jsonObject.event == "EVENT_MOV")
         {
@@ -90,8 +90,8 @@ if( window.WebSocket ){
               this.currentTime = MySet.start;
             }, false);
             removeClass(video,'hidden');
-	        video.muted = false;
-            
+            video.muted = false;
+
             video.autoplay = true;
             //video.get(0).play();
             video.play();
@@ -130,7 +130,6 @@ if( window.WebSocket ){
         console.log("Connection Closed!");
     }  
 }
-
 
 function hasClass(el, className)
 {
