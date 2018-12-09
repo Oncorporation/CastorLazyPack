@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.2"
+Version = "1.4.3"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,16 +37,23 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.3 by Charles Fettinger 2018-12-08
+    - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
+        $gif now also uses this technique for local files, to expand to svg and many other formats
+    - Added the videos subfolder 
+        try $movie(nuke.webm,0,5) 
+        this folder can also be used for graphics
+        
 1.4.2 by Charles Fettinger 2018-12-04
     - Added Twitch Clip support 
-        !movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>) 
+        $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>) 
         - look up the Slug at the end of any Twitch Clip (https://clips.twitch.tv/ThisIsTheSlug)
         - use 5 for 5 seconds
     - Updated GUI for Twitch API and Twitch Base Url
     - Updated Readme documentation
 
 1.4.11 by Charles Fettinger 2018-12-03
-    - Fixed !movie to use data uri - you can now use local files!
+    - Fixed $movie to use data uri - you can now use local files!
     - Fixed a muted bug in !movie
 
 1.4
@@ -261,17 +268,36 @@ def GetTextFileContent(textfile):
     except FileNotFoundError:
         return ""
 
+def GetMimeType(extension):
+    """helper to resolve mime typesx - 
+        SOME ITEMS are intentionally incorrect to maximize compatibility (avi, mov, etc)
+    """
+    _MimeDict = {'3gp':'3gpp','3g2':'3gpp2','apng':'png','avi':'mp4','flv':'x-flv','ico':'x-ico','jpg': 'jpeg','m3u8':'x-mpegURL','mid':'midi','mkv':'mp4','mov':'mp4','svg':'svg+xml','ts':'MP2T','tif':'tiff', 'wmv':'x-ms-wmv'}
+    if extension in _MimeDict:
+        extension = _MimeDict[extension]
+    return extension
+
 def GetDataURI(link, filetype):
-    """Gets the data URI if the link is a local file, else returns original link """
+    """Gets the data URI if the link is a local file, else returns original link 
+       use "+" for spaces when entering command text  i.e. BProgram+Files"
+    """
     url= link
     result = RegPath.search(link)
     if result:
-        pathname = result.group("pathname")
+        pathname = result.group("pathname").replace("+"," ")
+        # if file name only was given, it may be subfolder
+        fullpath = os.path.join(VideoFilesPath, pathname)
+        if fullpath and os.path.isfile(fullpath):
+            pathname = fullpath 
         ext = result.group("ext")
-        prefix = "data:" + filetype + "/" + ext + ";base64,"
+        #Parent.Log("CLPGDU",pathname + " mime:" + ext + ":" + GetMimeType(ext))
+        prefix = "data:" + filetype + "/" + GetMimeType(ext) + ";base64,"        
         with open(pathname, "rb") as file:
-            url = prefix + base64.b64encode(file.read())
-        #url = "file:" + urllib.pathname2url(pathname)    
+            try:
+                #Parent.Log("CLPGDI",str(len(file.read()) / 1000)+ "kb")
+                url = prefix + base64.b64encode(file.read())          
+            except:
+                Parent.Log("CLPGDI", link +" file too large, system out of memory")   
     return url
 
 def GetApiData(link):
@@ -289,19 +315,19 @@ def GetApiDataCount(link, header = {}):
     Parent.Log("CLP GADC", "header:" + str(header) + " link:"+ link)
     try:        
         response = Parent.GetRequest(link, header)
-        Parent.Log("CLP GADC", response)
+        #Parent.Log("CLP GADC", response)
         try:
             responsedata = json.loads(response['response'])
             Parent.Log("CLP GADC loads", responsedata)
             data = json.loads(responsedata['data'])
             totalcount = len(data)
-            Parent.Log("CLP GADC json", str(data))
+            #Parent.Log("CLP GADC json", str(data))
         except:
             Parent.Log("CLP GADC lit", "json failed")
             response = ast.literal_eval(response)
             responsedata = response['response']
             data = ast.literal_eval(responsedata)            
-            Parent.Log("CLP GADC thumb ", data['data'][0]['thumbnail_url'])
+            #Parent.Log("CLP GADC thumb ", data['data'][0]['thumbnail_url'])
             totalcount = len(data['data'])     
     except:
         Parent.Log("CLP GADC","failure " + "header:" + header + " link:"+ link)
@@ -317,18 +343,18 @@ def GetApiTwitchLink(link, header = {}):
     Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
     try:        
         response = Parent.GetRequest(link, header)
-        Parent.Log("CLP GATL", response)
+        #Parent.Log("CLP GATL", response)
         try:
             responsedata = json.loads(response['response'])
             Parent.Log("CLP GATL loads", responsedata)
             data = json.loads(responsedata['data'])            
-            Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+            #Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
         except:
             Parent.Log("CLP GATL lit", "json failed")
             response = ast.literal_eval(response)
             responsedata = response['response']
             data = ast.literal_eval(responsedata)
-            Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
+            #Parent.Log("CLP GATL thumb ", data['data'][0]['thumbnail_url'])
         
         if(len(data['data'][0]['thumbnail_url']) > 2):
             apilink = data['data'][0]['thumbnail_url'].replace("-preview-480x272.jpg",".mp4") 
@@ -365,34 +391,34 @@ def GetApiTwitchDictionary(link, header = {}):
         return data
 
 def GetApiGiphyTotalCount(link, search):
-	# Get the total number of giphy results for current search term
-	totalcount = 0
-	fail = "fail"
-	false = False
-	true = True
-	try:
-		response = Parent.GetRequest(link.__add__(search), {})
-		#Parent.Log("GiphyTotalCount",link.__add__(search) + " json:"+ str(is_json(response)))
-		#response = ast.literal_eval(response)
-		#Parent.Log("GATC r", response['pagination'][0])
-		try:
-			responsedata = json.loads(response)
-			data = json.loads(responsedata['response'])
-			totalcount = int(data['pagination']['total_count'])
-			#Parent.Log("GATC json", str(data['pagination']['total_count']))
-		except:
-			#Parent.Log("GATC lit", "json failed")
-			response = ast.literal_eval(response)
-			responsedata = response['response']
-			data = ast.literal_eval(responsedata)
-			#Parent.Log("GATC data ", str(data))
-			totalcount = int(data['pagination']['total_count'])		
-		#finally:
+    # Get the total number of giphy results for current search term
+    totalcount = 0
+    fail = "fail"
+    false = False
+    true = True
+    try:
+        response = Parent.GetRequest(link.__add__(search), {})
+        #Parent.Log("GiphyTotalCount",link.__add__(search) + " json:"+ str(is_json(response)))
+        #response = ast.literal_eval(response)
+        #Parent.Log("GATC r", response['pagination'][0])
+        try:
+            responsedata = json.loads(response)
+            data = json.loads(responsedata['response'])
+            totalcount = int(data['pagination']['total_count'])
+            #Parent.Log("GATC json", str(data['pagination']['total_count']))
+        except:
+            #Parent.Log("GATC lit", "json failed")
+            response = ast.literal_eval(response)
+            responsedata = response['response']
+            data = ast.literal_eval(responsedata)
+            #Parent.Log("GATC data ", str(data))
+            totalcount = int(data['pagination']['total_count'])     
+        #finally:
             #Parent.Log("CLP Page", data['pagination'])
-	except:
-		Parent.Log("GetApiGiphyTotalCount","failure")
-	finally:
-		return totalcount
+    except:
+        Parent.Log("GetApiGiphyTotalCount","failure")
+    finally:
+        return totalcount
 
 def GetApiGiphyId(link, search):
     #Convert string to dict from the api
@@ -409,10 +435,10 @@ def GetApiGiphyId(link, search):
             giphyid = data['data'][0]['id']
             #Parent.Log("Giphyid json", str(data['data'][0]['id']))
         except:
-        	#Parent.Log("Giphyid lit", "json failed")
-        	response = ast.literal_eval(response)
-        	responsedata = response['response']
-	        data = ast.literal_eval(responsedata)
+            #Parent.Log("Giphyid lit", "json failed")
+            response = ast.literal_eval(response)
+            responsedata = response['response']
+            data = ast.literal_eval(responsedata)
         #finally:
             #Parent.Log("GiphyId GpData",str(data))
 
@@ -624,10 +650,10 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         
         parseString = message
 
-	"""Grabs a random gif from Giphy based on your search term 
-	    $giphy(search term, duration seconds)
-	    $giphy(Epic+Fail, 15)
-	"""
+    """Grabs a random gif from Giphy based on your search term 
+        $giphy(search term, duration seconds)
+        $giphy(Epic+Fail, 15)
+    """
     if "$giphy(" in parseString:                
         """create full api url"""
         #Parent.Log("giphy Key",MySet.giphyapikey)
@@ -635,11 +661,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if (MySet.giphyapikey == ""):
             parseString =  "[Error: Giphy Api Key is not found]"
         else:
-        	apicheck = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, 0, MySet.language, MySet.giphyrating)
-        	result = RegGiphy.search(parseString)
-        	parseString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
-        	if result:        		
-    			fullGif = result.group(0)
+            apicheck = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, 0, MySet.language, MySet.giphyrating)
+            result = RegGiphy.search(parseString)
+            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
+            if result:              
+                fullGif = result.group(0)
                 gifDuration = int(result.group("duration"))
                 GifSearch = result.group("search")
                 parseString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
@@ -647,17 +673,17 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 totalcount = GetApiGiphyTotalCount(apicheck, GifSearch)
                 #Parent.Log("giphy tcount",totalcount)
                 if (totalcount > 0):
-					"""limit results to top 20, otherwise offset is inaccurate to search term"""
-					if (totalcount > 20):
-						totalcount = 20
-					rand = random.randint(0,totalcount)
-					api = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, rand, MySet.language, MySet.giphyrating)
-					GiphyImageId = GetApiGiphyId(api,GifSearch)
-					GifLink = MySet.giphyimageurl.format(GiphyImageId)
-					"""broadcast image using existing gif code"""
-					f = {"duration": gifDuration*1000, "link": GifLink}
-					Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
-					parseString = "Playing " + GifSearch + " for " + str(gifDuration) + " seconds"
+                    """limit results to top 20, otherwise offset is inaccurate to search term"""
+                    if (totalcount > 20):
+                        totalcount = 20
+                    rand = random.randint(0,totalcount)
+                    api = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, rand, MySet.language, MySet.giphyrating)
+                    GiphyImageId = GetApiGiphyId(api,GifSearch)
+                    GifLink = MySet.giphyimageurl.format(GiphyImageId)
+                    """broadcast image using existing gif code"""
+                    f = {"duration": gifDuration*1000, "link": GifLink}
+                    Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
+                    parseString = "Playing " + GifSearch + " for " + str(gifDuration) + " seconds"
 
     """Plays a youtube video
         $movyt(videoid, start seconds, duration seconds)
@@ -737,7 +763,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movLink = result.group("link")
             pathResult = RegPath.search(movLink)
             if pathResult:
-                movType = "video/" + pathResult.group("ext")
+                movType = "video/" + GetMimeType(pathResult.group("ext"))
                 #Parent.Log("movie ext", movType)
 
             pathResult = RegIsPath.search(movLink)
@@ -917,7 +943,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         result = RegGif.search(parseString)
         if result:
             fullGif = result.group(0)
-            GifLink = result.group("link")
+            GifLink = GetDataURI(result.group("link"),"image")
 
             gifDuration = int(result.group("duration"))
             f = {"duration": gifDuration*1000, "link": GifLink}
@@ -1181,6 +1207,7 @@ def Wizebot(parseString):
 settingsfile = os.path.join(os.path.dirname(__file__), "settings.json")
 tweetFile = os.path.join(os.path.dirname(__file__), "tweet.txt")
 AudioFilesPath = os.path.join(os.path.dirname(__file__), "sounds")
+VideoFilesPath = os.path.join(os.path.dirname(__file__), "videos")
 AudioPlaybackQueue = deque()
 MessageBox = ctypes.windll.user32.MessageBoxW
 MB_YES = 6
