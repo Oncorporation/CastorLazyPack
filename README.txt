@@ -10,12 +10,13 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
-1.4.3 by Charles Fettinger 2018-12-08
+1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats
     - Added videos subfolder 
         try $movie(nuke.webm,0,5) 
         this folder can also be used for graphics
+    -Added $readlinz - which outputs the lines of a file in the File folder: similar to $readlines
 
 1.4.2 by Charles Fettinger 2018-12-04
     - Added Twitch Clip support 

@@ -1,22 +1,23 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.4.2
+**Latest Version:** 1.4.3
 
-**Download:** [CastorrsLazyPack1.4.2.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4/CastorrsLazyPack1.4.2.zip)
+**Download:** [CastorrsLazyPack1.4.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4.3/CastorrsLazyPack1.4.3.zip)
 
-**Updated:** Charles Fettinger 2018-12-04
+**Updated:** Charles Fettinger 2018-12-09
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
-	1.4.3 by Charles Fettinger 2018-12-08
+	1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats
     - Added the videos subfolder 
     	try $movie(nuke.webm,0,5) 
         this folder can also be used for graphics
+    -Added $readlinz - which outputs the lines of a file in the File folder: similar to $readlines
 
     1.4.2 by Charles Fettinger 2018-12-04
 	- Added Twitch Clip support 
