@@ -931,9 +931,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
     
     if "$readlinz" in parseString:
         file  = parseString.Replace("$readlinz ", "")
-        Parent.Log("CLPrl", parseString +" :" + file)
         fullpath = labellocation + file
-        Parent.Log("CLPrl", fullpath)            
         if fullpath and os.path.isfile(fullpath):
             parseString = parseString.replace(parseString, '\n'.join(GetTextFileContents(fullpath)))
         else:
