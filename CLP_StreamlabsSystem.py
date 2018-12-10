@@ -37,12 +37,13 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
-1.4.3 by Charles Fettinger 2018-12-08
+1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats
     - Added the videos subfolder 
         try $movie(nuke.webm,0,5) 
         this folder can also be used for graphics
+    -Added $readlinz - which outputs the lines of a file in the File folder: similar to $readlines
         
 1.4.2 by Charles Fettinger 2018-12-04
     - Added Twitch Clip support 
@@ -265,6 +266,14 @@ def GetTextFileContent(textfile):
     try:
         with codecs.open(textfile, encoding="utf-8-sig", mode="r") as f:
             return f.readline().strip()
+    except FileNotFoundError:
+        return ""
+
+def GetTextFileContents(textfile):
+    """Grabs content from textfile"""
+    try:
+        with codecs.open(textfile, encoding="utf-8-sig", mode="r") as f:
+            return f.readlines()
     except FileNotFoundError:
         return ""
 
@@ -919,6 +928,16 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 parseString = parseString.replace(fullparam, GetTextFileContent(fullpath))
             else:
                 parseString = parseString.replace(fullparam, "[ERROR: Labels file not found]")
+    
+    if "$readlinz" in parseString:
+        file  = parseString.Replace("$readlinz ", "")
+        Parent.Log("CLPrl", parseString +" :" + file)
+        fullpath = labellocation + file
+        Parent.Log("CLPrl", fullpath)            
+        if fullpath and os.path.isfile(fullpath):
+            parseString = parseString.replace(parseString, '\n'.join(GetTextFileContents(fullpath)))
+        else:
+            parseString = parseString.replace(parseString, "[ERROR: file not found]")
 
     if "$torand" in parseString:
         if len(message) > 1:
