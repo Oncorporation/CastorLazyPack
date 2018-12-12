@@ -768,15 +768,13 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:                
             fullMov = result.group(0)
             movDuration = int(result.group("duration"))
-            movStart = int(result.group("start"))                    
+            movStart = int(result.group("start"))
             movLink = result.group("link")
             pathResult = RegPath.search(movLink)
             if pathResult:
                 movType = "video/" + GetMimeType(pathResult.group("ext"))
-                #Parent.Log("movie ext", movType)
 
             pathResult = RegIsPath.search(movLink)
-            Parent.Log("movie path", movLink)
             if pathResult:
                 #Parent.Log("movie Params", "getting data URI")
                 useURI = True
@@ -960,7 +958,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         result = RegGif.search(parseString)
         if result:
             fullGif = result.group(0)
-            GifLink = GetDataURI(result.group("link"),"image")
+            GifLink = result.group("link")
+
+            pathResult = RegIsPath.search(GifLink)
+            if pathResult:
+                GifLink = GetDataURI(GifLink,"image")
 
             gifDuration = int(result.group("duration"))
             f = {"duration": gifDuration*1000, "link": GifLink}
