@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html allow="autoplay">
 <head lang="en">
     <meta charset="UTF-8">
@@ -14,30 +14,36 @@
 	    	padding-bottom: 5%;
 	    	display:block;
 		}
-		.video
-		{
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    min-width: 50%;
-		    min-height: 50%;
-		    width: 100%; height: calc(100vh - 20px);
-		    display:block;
-		}
-		.hidden
-		{
-		  	display:none !important;
-		}		
-		.giphybadge
-		{
-		  position: relative;
-		  top: 0;
-		  left: 0;
-		  max-width:100px;
-		  width:25%;
-		  z-index:1000;
-		  opacity:0.8;
-		}
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 50%;
+            min-height: 50%;
+            width: 100%;
+            height: calc(100vh - 20px);
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            transition: visibility .75s, opacity .75s ease-out;
+        }
+        .hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: visibility .75s, opacity .75s ease-out;
+            /*display:none !important;*/
+        }
+        .giphybadge {
+            position: relative;
+            top: 0;
+            left: 0;
+            max-width: 100px;
+            width: 25%;
+            z-index: 1000;
+            opacity: 0.65;
+            visibility: visible;
+            transition: visibility .75s, opacity .75s ease-out;
+        }
 	</style>
 </head>
 <body>	

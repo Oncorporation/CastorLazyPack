@@ -1,16 +1,21 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.4.3
+**Latest Version:** 1.4.4
 
-**Download:** [CastorrsLazyPack1.4.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4.3/CastorrsLazyPack1.4.3.zip)
+**Download:** [CastorrsLazyPack1.4.4.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.4.4/CastorrsLazyPack1.4.4.zip)
 
-**Updated:** Charles Fettinger 2018-12-09
+**Updated:** Charles Fettinger 2019-01-01
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+	1.4.4 by Charles Fettinger 2019-01-01
+	- Minor updates to Index.html and client.js to provide css transitions to browser source content.
+		This is in review of a more significant upgrade adding a queue to the browser source content
+		Also of note, when using $movie consider browser compatible video sources like .webm as opposed to .AVI
+
 	1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats

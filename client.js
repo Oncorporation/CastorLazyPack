@@ -15,7 +15,7 @@ if( window.WebSocket ){
             website: "https://www.twitch.tv/surn",
             api_key: API_Key,
             events: [
-                "EVENT_GIF","EVENT_MOV", "EVENT_YUT"
+                "EVENT_GIF","EVENT_MOV","EVENT_YUT"
             ]
         }
         //Send your Data to the server
@@ -32,11 +32,14 @@ if( window.WebSocket ){
     {
         var jsonObject = JSON.parse(message.data);
 
-        if(jsonObject.event == "EVENT_GIF")
-        {
+        if (jsonObject.event !== "EVENT_CONNECTED") {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
+            console.log("Parsed" + jsonObject);
+        }
+
+        if(jsonObject.event === "EVENT_GIF")
+        {
             //show gif
             var image = document.getElementById("myimg");
             var badge = document.getElementById("mybadge");
@@ -50,26 +53,23 @@ if( window.WebSocket ){
                 removeClass(badge,'hidden');
             }
 
-            setTimeout(function() {
-                image.removeAttribute('src');
+            setTimeout(function() {                
                 addClass(image,'hidden');
                 if(isgiphy)
                 {
                     addClass(badge,'hidden');
                 }
+                setTimeout(function () {image.removeAttribute('src')}, 1000);
              }, MySet.duration);
         }
 
-        if(jsonObject.event == "EVENT_MOV")
+        if(jsonObject.event === "EVENT_MOV")
         {
-            //parse jason data
-            var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
             //show movie
             var video = document.getElementById('mymov');
             var source = document.createElement('source');
 
-/*            if (!MySet.link.includes("http"))
+            /*if (!MySet.link.includes("http"))
             {
                 var URL = window.URL || window.webkitURL
                 MySet.link = URL.createObjectURL(MySet.Link)
@@ -96,30 +96,27 @@ if( window.WebSocket ){
             //video.get(0).play();
             video.play();
 
-            setTimeout(function() {
+            setTimeout(function () {
+                addClass(video, 'hidden');
                 video.pause();    
-                source.removeAttribute('src'); // empty source
+                setTimeout(function () { source.removeAttribute('src') },1000); // empty source
                 video.load();
                 video.play();
-                video.removeChild(source);
-                addClass(video,'hidden');
+                video.removeChild(source);                
                 video.muted = true;
             }, MySet.duration);
         }
 
-        if(jsonObject.event == "EVENT_YUT")
+        if(jsonObject.event === "EVENT_YUT")
         {
-            //parse jason data
-            var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
             //show movie
             var youtube = document.getElementById('myyut');
             youtube.setAttribute('src',  "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start +"&end=" + (MySet.start + (MySet.duration / 1000).toString()));
-            removeClass(youtube,'hidden')
+            removeClass(youtube, 'hidden');
             
-            setTimeout(function() {                   
-                youtube.removeAttribute('src'); // empty source
-                addClass(youtube,'hidden')
+            setTimeout(function () { 
+                addClass(youtube, 'hidden');
+                setTimeout(function () { youtube.removeAttribute('src') },1000); // empty source                
              }, MySet.duration);
 
         }
@@ -141,7 +138,7 @@ function hasClass(el, className)
 function addClass(el, className)
 {
     if (el.classList)
-        el.classList.add(className)
+        el.classList.add(className);
     else if (!hasClass(el, className))
         el.className += " " + className;
 }
@@ -149,7 +146,7 @@ function addClass(el, className)
 function removeClass(el, className)
 {
     if (el.classList)
-        el.classList.remove(className)
+        el.classList.remove(className);
     else if (hasClass(el, className))
     {
         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
