@@ -5,88 +5,92 @@ if (window.WebSocket) {
     var serviceUrl = "ws://127.0.0.1:3337/streamlabs";
     var socket = new WebSocket(API_Socket);
 
-    var imgqueue = async.queue(async function (MySet, callback) {
-        //show gif
-        var image = document.getElementById("myimg");
-        var badge = document.getElementById("mybadge");
-        var isgiphy = (MySet.link.indexOf('giphy') > 0);
+    var imgqueue = async.queue(async function (MySet,callback) {
+        switch (MySet.element) {
+            case 'video':
+                //show movie
+                var video = document.getElementById('mymov');
+                var source = document.createElement('source');
 
-        image.setAttribute('src', MySet.link);
-        console.log("got image " + MySet.link);
-        removeClass(image, 'hidden');
-        if (isgiphy) {
-            removeClass(badge, 'hidden');
-        }
+                /*if (!MySet.link.includes("http"))
+                {
+                    var URL = window.URL || window.webkitURL
+                    MySet.link = URL.createObjectURL(MySet.Link)
+                }*/
+                if (MySet.uri) {
+                    source.setAttribute('src', MySet.link);
+                }
+                else {
+                    source.setAttribute('src', MySet.link + "#t=" + MySet.start);
+                }
+                source.setAttribute('type', MySet.type);
+                //console.log("got movie " + MySet.type + "#t=" + MySet.start);
 
-        await timeout(MySet.duration);
+                video.appendChild(source);
+                video.addEventListener('loadedmetadata', function () {
+                    this.currentTime = MySet.start;
+                }, false);
+                removeClass(video, 'hidden');
+                video.muted = false;
 
-        addClass(image, 'hidden');
-        if (isgiphy) {
-            addClass(badge, 'hidden');
-        }
-        await timeout(1000);
+                video.autoplay = true;
+                //video.get(0).play();
+                video.play();
 
-        image.removeAttribute('src');
-        callback();
+                await timeout(MySet.duration);
+
+                addClass(video, 'hidden');
+                await timeout(1000);
+
+                video.pause();
+                video.load();
+                source.removeAttribute('src'); // empty source
+                video.play();
+                video.removeChild(source);
+                video.muted = true; 
+                callback();
+                break;
+
+            case 'framesrc':
+                //show movie
+                var youtube = document.getElementById('myyut');
+                youtube.setAttribute('src', "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start + "&end=" + (MySet.start + (MySet.duration / 1000).toString()));
+                removeClass(youtube, 'hidden');
+
+                await timeout(MySet.duration);
+                addClass(youtube, 'hidden');
+                await timeout(1000);
+
+                youtube.removeAttribute('src');
+                callback();
+                break;
+            case 'img':
+            default:
+                //show gif
+                var image = document.getElementById("myimg");
+                var badge = document.getElementById("mybadge");
+                var isgiphy = (MySet.link.indexOf('giphy') > 0);
+
+                image.setAttribute('src', MySet.link);
+                //console.log("got image " + MySet.link);
+                removeClass(image, 'hidden');
+                if (isgiphy) {
+                    removeClass(badge, 'hidden');
+                }
+
+                await timeout(MySet.duration);
+
+                addClass(image, 'hidden');
+                if (isgiphy) {
+                    addClass(badge, 'hidden');
+                }
+                await timeout(1000);
+
+                image.removeAttribute('src');
+                callback();
+        }        
     }, 1);
 
-    var videoqueue = async.queue(async function (MySet, callback) {
-        //show movie
-        var video = document.getElementById('mymov');
-        var source = document.createElement('source');
-
-        /*if (!MySet.link.includes("http"))
-        {
-            var URL = window.URL || window.webkitURL
-            MySet.link = URL.createObjectURL(MySet.Link)
-        }*/
-        if (MySet.uri) {
-            source.setAttribute('src', MySet.link);
-        }
-        else {
-            source.setAttribute('src', MySet.link + "#t=" + MySet.start);
-        }
-        source.setAttribute('type', MySet.type);
-        console.log("got movie " + MySet.type + "#t=" + MySet.start);
-
-        video.appendChild(source);
-        video.addEventListener('loadedmetadata', function () {
-            this.currentTime = MySet.start;
-        }, false);
-        removeClass(video, 'hidden');
-        video.muted = false;
-
-        video.autoplay = true;
-        //video.get(0).play();
-        video.play();
-
-        await timeout(MySet.duration);
-
-        addClass(video, 'hidden');        
-        await timeout(1000); 
-
-        video.pause();
-        video.load();
-        source.removeAttribute('src'); // empty source
-        video.play();
-        video.removeChild(source);
-        video.muted = true;      
-        callback();
-    }, 1);
-
-    var framesrcqueue = async.queue(async function (MySet, callback) {
-        //show movie
-        var youtube = document.getElementById('myyut');
-        youtube.setAttribute('src', "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start + "&end=" + (MySet.start + (MySet.duration / 1000).toString()));
-        removeClass(youtube, 'hidden');
-
-        await timeout(MySet.duration);
-        addClass(youtube, 'hidden');
-        await timeout(1000);
-
-        youtube.removeAttribute('src');
-        callback();
-    }, 1);
     //---------------------------------
     //  Events
     //---------------------------------
@@ -115,19 +119,23 @@ if (window.WebSocket) {
         if (jsonObject.event !== "EVENT_CONNECTED") {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
+            MySet.element = '';
             console.log("Parsed" + jsonObject);
         }
 
         if (jsonObject.event === "EVENT_GIF") {
+            MySet.element = 'img';
             imgqueue.push(MySet);
         }
 
         if (jsonObject.event === "EVENT_MOV") {
-            videoqueue.push(MySet);
+            MySet.element = 'video';
+            imgqueue.push(MySet);
         }
 
         if (jsonObject.event === "EVENT_YUT") {
-            framesrcqueue.push(MySet);
+            MySet.element = 'framesrc';
+            imgqueue.push(MySet);
         }
     };
 

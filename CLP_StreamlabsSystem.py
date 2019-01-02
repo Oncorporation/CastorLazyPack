@@ -37,6 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.6 by Charles Fettinger 2019-01-01
+    - Update to consolidate browser sources into one queue
+
 1.4.5 by Charles Fettinger 2019-01-01
     - Add queue in browser source for images, videos and framesource ($gif, $movie, $movtw, $movyt)
 
