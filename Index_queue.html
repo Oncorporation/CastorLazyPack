@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<script src="vue.js"></script>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CLP Overlay</title>
+    <script src="API_Key.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        html {
+            display: table;
+            margin: 0 auto;
+        }
+
+        body {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center
+        }
+
+        .fade-enter-active {
+            transition: opacity .75s ease-in;
+        }
+        .fade-leave-active {
+            transition: opacity .75s ease-out;
+        }
+
+        .fade-enter,
+        .fade-leave-to
+        /* .fade-leave-active below version 2.1.8 */
+            {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="item" id="app">
+        <client-component inline-template>
+            <div>
+                <transition name="fade">
+                    <div v-if="fade">
+                        <img v-bind:src="imageurl">
+
+                    </div>
+                </transition>
+            </div>
+        </client-component>
+    </div>
+
+
+    <script src="async.js"></script>
+    <script src="newclient.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+        });
+    </script>
+</body>
+</html>
