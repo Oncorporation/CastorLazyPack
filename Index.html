@@ -1,49 +1,58 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html allow="autoplay">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Redeem Overlay</title>
-	<script src="API_Key.js"></script>
-	<script src="settings.js"></script>
-	<style>
-		.container
-		{
-	    	position: relative;
-	    	width: 100%;	
-	    	height:100%;    	
-	    	padding-bottom: 5%;
-	    	display:block;
-		}
-		.video
-		{
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    min-width: 50%;
-		    min-height: 50%;
-		    width: 100%; height: calc(100vh - 20px);
-		    display:block;
-		}
-		.hidden
-		{
-		  	display:none !important;
-		}		
-		.giphybadge
-		{
-		  position: relative;
-		  top: 0;
-		  left: 0;
-		  max-width:100px;
-		  width:25%;
-		  z-index:1000;
-		  opacity:0.65;
-		}
-	</style>
+    <script src="API_Key.js"></script>
+    <script src="settings.js"></script>
+    <script src="async.js"></script>
+    <style>
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding-bottom: 5%;
+            display: block;
+        }
+
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 50%;
+            min-height: 50%;
+            width: 100%;
+            height: calc(100vh - 20px);
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            transition: visibility .75s, opacity .75s ease-out;
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: visibility .75s, opacity .75s ease-out;
+            /*display:none !important;*/
+        }
+
+        #mybadge {
+            position: relative;
+            top: 0;
+            left: 0;
+            max-width: 100px;
+            width: 25%;
+            z-index: 1000;
+            opacity: 0.65;
+            visibility: visible;
+            transition: visibility .75s, opacity .75s ease-out;
+        }
+    </style>
 </head>
 <body>	
  	<script src="client.js"></script>  	
   	<div class="container">
-  		<img id="mybadge" class="giphybadge hidden" src="Poweredby_100px_Badge.gif">
+  		<img id="mybadge" class="hidden" src="Poweredby_100px_Badge.gif">
   		<img id="myimg" class="video hidden">
   	  	<video id="mymov" class="video hidden" width="100%" autoplay autoplay="autoplay" loop="" muted="" playsinline="">
   			Your browser does not support the video tag.

@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.3"
+Version = "1.4.5"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,14 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.5 by Charles Fettinger 2019-01-01
+    - Add queue in browser source for images, videos and framesource ($gif, $movie, $movtw, $movyt)
+
+1.4.4 by Charles Fettinger 2019-01-01
+	- Minor updates to Index.html and client.js to provide css transitions to browser source content.
+		This is in review of a more significant upgrade adding a queue to the browser source content
+		Also of note, when using $movie consider browser compatible video sources like .webm as opposed to .AVI
+
 1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats
@@ -471,11 +479,11 @@ def GetApiGiphyId(link, search):
         return giphyid
 
 def is_json(myjson):
-  try:
-    json_object = json.loads(myjson)
-  except ValueError, e:
-    return False
-  return True
+    try:
+        json_object = json.loads(myjson)
+    except ValueError, e:
+        return False
+    return True
 
 def EnqueueAudioFile(audiofile):
     """Adds an audio file from the audio folder to the play queue. """

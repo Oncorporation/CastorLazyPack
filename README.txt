@@ -10,6 +10,14 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.5 by Charles Fettinger 2019-01-01
+    - Add queue in browser source for images, videos and framesource ($gif, $movie, $movtw, $movyt)
+
+1.4.4 by Charles Fettinger 2019-01-01
+	- Minor updates to Index.html and client.js to provide css transitions to browser source content.
+		This is in review of a more significant upgrade adding a queue to the browser source content
+		Also of note, when using $movie consider browser compatible video sources like .webm as opposed to .AVI
+
 1.4.3 by Charles Fettinger 2018-12-09
     - Added code to maximize local file compatibility with HTML5 Video sources and graphics formats
         $gif now also uses this technique for local files, to expand to svg and many other formats
