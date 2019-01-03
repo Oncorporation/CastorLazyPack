@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.5"
+Version = "1.4.7"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,12 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.7 by Charles Fettinger 2019-01-02
+    - Tweaks to text responses to $movie, $gif, etc - disabled
+    
+1.4.6 by Charles Fettinger 2019-01-01
+    - Update to consolidate browser sources into one queue
+
 1.4.5 by Charles Fettinger 2019-01-01
     - Add queue in browser source for images, videos and framesource ($gif, $movie, $movtw, $movyt)
 
@@ -670,22 +676,23 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
     """Grabs a random gif from Giphy based on your search term 
         $giphy(search term, duration seconds)
         $giphy(Epic+Fail, 15)
+        NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$giphy(" in parseString:                
         """create full api url"""
         #Parent.Log("giphy Key",MySet.giphyapikey)
         random.seed()
         if (MySet.giphyapikey == ""):
-            parseString =  "[Error: Giphy Api Key is not found]"
+            errorString =  "[Error: Giphy Api Key is not found]"
         else:
             apicheck = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, 0, MySet.language, MySet.giphyrating)
             result = RegGiphy.search(parseString)
-            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
+            errorString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
             if result:              
                 fullGif = result.group(0)
                 gifDuration = int(result.group("duration"))
                 GifSearch = result.group("search")
-                parseString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
+                errorString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
                 """check search term for results"""
                 totalcount = GetApiGiphyTotalCount(apicheck, GifSearch)
                 #Parent.Log("giphy tcount",totalcount)
@@ -700,7 +707,14 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                     """broadcast image using existing gif code"""
                     f = {"duration": gifDuration*1000, "link": GifLink}
                     Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
-                    parseString = "Playing " + GifSearch + " for " + str(gifDuration) + " seconds"
+                    errorString = None
+               
+        if (errorString == None):
+            parseString = parseString.Replace(fullGif,"")
+            #Parent.SendStreamMessage("Playing " + GifSearch + " for " + str(gifDuration) + " seconds")
+        else:
+            parseString = errorString
+        
 
     """Plays a youtube video
         $movyt(videoid, start seconds, duration seconds)
@@ -721,22 +735,25 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             """broadcast movie url"""
             f = {"link": movLink, "start": movStart, "duration": movDuration*1000}
             Parent.BroadcastWsEvent("EVENT_YUT", json.dumps(f, encoding='utf-8-sig'))
-
-            parseString = "Playing for " + str(movDuration) + " seconds" #movLink #parseString.replace(fullGif, "")
+                        
+            parseString = parseString.Replace(fullMov,"")
+            #Parent.SendStreamMessage("Playing for " + str(movDuration) + " seconds") #movLink #parseString.replace(fullGif, "")
         else:
-            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a paremter]"
+            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a parameter]"
 
     """Plays a Twitch Clip in html 5
        $movtw(id, start seconds, duration seconds) 
        $movtw(BlushingVastFloofPeteZaroll,10,20)
+       NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$movtw(" in parseString:
         useURI = False
         random.seed()
         if (MySet.twitchapikey == ""):
-            parseString =  "[Error: Twitch Api Key is not found]"
+            errorString =  "[Error: Twitch Api Key is not found]"
         else:
             result = RegMovie.search(parseString)
+            errorString = "[ERROR: Seems like you have a space in the () or forgot to set a parameter]"
             if result:
                 fullMov = result.group(0)
                 movDuration = int(result.group("duration"))
@@ -746,23 +763,26 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 totalcount = GetApiDataCount(ClipsApi.format(movLink), header)
                 movType = "video/mp4"
                 Parent.Log("twitch tcount",str(totalcount))
+                errorString = "[ERROR: No results for Movie Clip]" 
                 if (totalcount > 0):
                     """limit results to top 20, otherwise offset is inaccurate to search term"""
                     if (totalcount > 20):
                         totalcount = 20
                     rand = random.randint(0,totalcount)
                     movLink = GetApiTwitchLink(ClipsApi.format(movLink), header)
+                    errorString = "[ERROR: Movie Clip Not Found]" 
                     if(len(movLink) > 1):
                         #broadcast twitch clip url 
                         f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
                         Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
+                        errorString = None
 
-                        parseString = "Playing for " + str(movDuration) + " seconds" 
-                    else:
-                       parseString = "[ERROR: Movie Clip Not Found]" 
-            else:
-                parseString = "[ERROR: Seems like you have a space in the () or forgot to set a paremter]"
-
+        if (errorString == None):
+            parseString = parseString.Replace(fullMov,"")
+            #Parent.SendStreamMessage("Playing for " + str(movDuration) + " seconds" )
+        else:
+            parseString = errorString
+ 
 
     """Plays a video in html 5
         $movie(url, start seconds, duration seconds)
@@ -794,9 +814,10 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
             Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
 
-            parseString = "Playing for " + str(movDuration) + " seconds" #movLink #parseString.replace(fullGif, "")
+            parseString = parseString.Replace(fullMov,"")
+            #Parent.SendStreamMessage("Playing for " + str(movDuration) + " seconds") #movLink #parseString.replace(fullGif, "")
         else:
-            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a paremter]"
+            parseString = "[ERROR: Seems like you have a space in the () or forgot to set a parameter]"
 
     if "$followage" in parseString:
         if MySet.service == "Twitch":

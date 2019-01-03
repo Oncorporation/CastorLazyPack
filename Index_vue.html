@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html allow="autoplay">
+<script src="vue.js"></script>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CLP Overlay</title>
+    <script src="API_Key.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        /*html {
+            display: table;
+            margin: 0 auto;
+        }*/
+
+        /*body {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center
+        }*/
+
+        .item {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding-bottom: 5%;
+            display: block;
+        }
+
+        .fade-enter-active {
+            transition: opacity 1.0s ease-in;
+            visibility: visible;
+        }
+
+        .fade-leave-active {
+            transition: opacity 1.0s ease-out;
+            visibility: visible;
+        }
+
+        .fade-enter,
+        .fade-leave-to
+        /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+            visibility: hidden !important;
+        }
+
+        .hidden {
+            display:none !important;
+        }
+
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 50%;
+            min-height: 50%;
+            width: 100%;
+            height: calc(100vh - 20px);
+            display: block;
+        }
+
+        #mybadge {
+            position: relative;
+            top: 0;
+            left: 0;
+            max-width: 100px;
+            width: 25%;
+            z-index: 1000;
+            opacity: 0.65 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="item" id="app">
+        <client-component inline-template>
+            <div>
+                <transition name="fade">
+                    <div v-if="fade">
+                        <img id="mybadge" ref="mybadge" v-bind:src="badgeurl" v-bind:class="badgeclass">
+                        <img v-bind:src="imageurl" v-bind:class="imgclass">
+                        <video ref="myvideo" v-bind:src="videosrc" v-bind:class="videoclass" autoplay autoplay="autoplay" loop="" v-bind:muted="muted" playsinline="">
+                            Your browser does not support the video tag.
+                        </video>
+                        <iframe v-bind:src="framesrc" v-bind:class="frameclass" allow="autoplay; fullscreen" frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+                    </div>
+                </transition>
+            </div>
+        </client-component>
+    </div>
+
+
+    <script src="async.js"></script>
+    <script src="newclient.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+        });
+    </script>
+</body>
+</html>

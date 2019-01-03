@@ -10,6 +10,12 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.7 by Charles Fettinger 2019-01-02
+    - Tweaks to text responses to $movie, $gif, etc - disabled
+
+1.4.6 by Charles Fettinger 2019-01-01
+    - Update to consolidate browser sources into one queue
+
 1.4.5 by Charles Fettinger 2019-01-01
     - Add queue in browser source for images, videos and framesource ($gif, $movie, $movtw, $movyt)
 
