@@ -80,7 +80,7 @@ Vue.component('client-component', {
                 case 'img':
                 default:
                     //show gif
-                    this.imgclass = "hidden";                    
+                    this.imgclass = "";                    
                     var isgiphy = (MySet.link.indexOf('giphy') > 0);
                     if (isgiphy) {
                         this.badgeclass = "";
