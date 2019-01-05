@@ -46,22 +46,12 @@ Vue.component('client-component', {
                     //    this.on('loadedmetadata', function () {
                     //        video.currentTime(MySet.start);
                     //    });
-                    //});
-                    
-                    //video.muted = false;
-                    //video.autoplay = true;
-                    //video.get(0).play();
-                    //video.play();
+                    //});  
                     this.muted = false;
                     await this.timeout(MySet.duration);
                     this.muted = true;
-                    //video.pause();
-                    //video.load();
-                    this.videosrc = "";
-                    //video.play();
-                    //video.removeChild(source);
-                    //video.muted = true; 
 
+                    this.videosrc = "";
                     this.fade = false;
                     await this.timeout(1000);
                     this.videoclass = "hidden";

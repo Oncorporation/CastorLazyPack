@@ -10,6 +10,9 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.7.1 by Charles Fettinger 2019-01-05
+	- bug fix to vuejs branch
+	
 1.4.7 by Charles Fettinger 2019-01-02
     - Tweaks to text responses to $movie, $gif, etc - disabled
 

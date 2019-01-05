@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.7"
+Version = "1.4.7.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.7.1 by Charles Fettinger 2019-01-05
+    - bug fix to vuejs branch
+
 1.4.7 by Charles Fettinger 2019-01-02
     - Tweaks to text responses to $movie, $gif, etc - disabled
     
