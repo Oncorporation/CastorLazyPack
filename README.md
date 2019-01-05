@@ -2,7 +2,7 @@
 
 **Latest Version:** 1.4.7.1
 
-**Download:** [CastorrsLazyPack1.4.7.1.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.7.1/CastorLazyPack1.4.7.1.zip)
+**Download:** [CastorrsLazyPack1.4.7.1.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.7.1-vue/CastorLazyPack1.4.7.1-VUEJS.zip)
 
 **Updated:** Charles Fettinger 2019-01-05
 
