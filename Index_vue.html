@@ -84,7 +84,7 @@
                     <div v-if="fade">
                         <img id="mybadge" ref="mybadge" v-bind:src="badgeurl" v-bind:class="badgeclass">
                         <img v-bind:src="imageurl" v-bind:class="imgclass">
-                        <video ref="myvideo" v-bind:src="videosrc" v-bind:class="videoclass" autoplay autoplay="autoplay" loop="" v-bind:muted="muted" playsinline="">
+                        <video id="mymov" ref="mymov" v-bind:src="videosrc" v-bind:class="videoclass" autoplay autoplay="autoplay" loop="" v-bind:muted="muted" playsinline="">
                             Your browser does not support the video tag.
                         </video>
                         <iframe v-bind:src="framesrc" v-bind:class="frameclass" allow="autoplay; fullscreen" frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>

@@ -13,7 +13,7 @@ Vue.component('client-component', {
             frameclass: 'hidden',
             videosrc: '',
             videoclass: 'hidden',
-            muted: true
+            muted: true            
         };
     },
     methods: {
@@ -39,24 +39,27 @@ Vue.component('client-component', {
                         this.videosrc = MySet.link + "#t=" + MySet.start;
                     }
                     this.videoclass = "video";
-                    this.fade = true;
-                    var video = this.$refs["myvideo"];
-                    video.addEventListener('loadedmetadata', function () {
-                        this.currentTime = MySet.start;
-                    }, false);
+                    this.fade = true;                    
+                    //var video = this.$refs.mymov;
+
+                    //video.on("ready", function () {
+                    //    this.on('loadedmetadata', function () {
+                    //        video.currentTime(MySet.start);
+                    //    });
+                    //});
                     
                     //video.muted = false;
-                    video.autoplay = true;
+                    //video.autoplay = true;
                     //video.get(0).play();
-                    video.play();
+                    //video.play();
                     this.muted = false;
                     await this.timeout(MySet.duration);
                     this.muted = true;
-                    video.pause();
-                    video.load();
+                    //video.pause();
+                    //video.load();
                     this.videosrc = "";
-                    video.play();
-                    video.removeChild(source);
+                    //video.play();
+                    //video.removeChild(source);
                     //video.muted = true; 
 
                     this.fade = false;
