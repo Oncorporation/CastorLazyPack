@@ -13,6 +13,8 @@ Vue.component('client-component', {
             frameclass: 'hidden',
             videosrc: '',
             videoclass: 'hidden',
+            textclass: 'hidden',
+            mytextcontent: '',
             muted: true            
         };
     },
@@ -70,6 +72,23 @@ Vue.component('client-component', {
                     this.frameclass = "hidden";
                     callback();
                     break;
+                case 'text':
+                    //show text
+                    if (MySet.style) {
+                        this.textclass = "video " + MySet.style;
+                    }
+                    else {
+                        this.textclass = "video normal";
+                    }
+                    this.mytextcontent = MySet.message;
+                    this.fade = true;
+                    await this.timeout(MySet.duration);
+                    this.mytextcontent = "";
+                    this.fade = false;
+                    await this.timeout(1000);
+                    this.textclass = "hidden";
+                    callback();
+                    break;
                 case 'img':
                 default:
                     //show gif
@@ -105,7 +124,7 @@ Vue.component('client-component', {
                 website: "https://www.twitch.tv/castorr91",
                 api_key: API_Key,
                 events: [
-                    "EVENT_GIF", "EVENT_MOV", "EVENT_YUT"
+                    "EVENT_GIF", "EVENT_MOV", "EVENT_YUT", "EVENT_TEXT"
                 ]
             };
             //  Send your Data to the server
@@ -140,6 +159,10 @@ Vue.component('client-component', {
                     break;
                 case "EVENT_YUT":
                     MySet.element = 'framesrc';
+                    this.queue.push(MySet);
+                    break;
+                case "EVENT_TEXT":
+                    MySet.element = 'text';
                     this.queue.push(MySet);
                     break;
                 default:

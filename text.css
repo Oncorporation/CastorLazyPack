@@ -1,0 +1,91 @@
+.normal {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/sunny.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align:center;
+}
+.reactor {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/reactor.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.spin {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/spin.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.matrix {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/matrixcode.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.blue {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/blue.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.glitch {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/glitch.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.fire {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/fire.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}

@@ -49,7 +49,7 @@
         }
 
         .hidden {
-            display:none !important;
+            display: none !important;
         }
 
         .video {
@@ -73,6 +73,7 @@
             opacity: 0.65 !important;
         }
     </style>
+    <link rel="stylesheet" href="text.css" type="text/css" media="screen">
 </head>
 
 <body>
@@ -88,6 +89,7 @@
                             Your browser does not support the video tag.
                         </video>
                         <iframe v-bind:src="framesrc" v-bind:class="frameclass" allow="autoplay; fullscreen" frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+                        <div id="mytext" ref="mytext" v-bind:class="textclass" v-html="mytextcontent"></div>
                     </div>
                 </transition>
             </div>

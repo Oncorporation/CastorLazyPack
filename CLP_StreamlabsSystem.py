@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.7.1"
+Version = "1.4.8"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,12 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.8 by Charles Fettinger 2019-01-15
+    - Added $text <MESSAGE>,<STYLE>,<DURATION>
+	- use + for spaces in message
+    - Modified $avatar to remove username
+    - Added text.css to hold standard styles for text
+
 1.4.7.1 by Charles Fettinger 2019-01-05
     - bug fix to vuejs branch
 
@@ -873,7 +879,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             link = link.format(username)
         returnValue = GetApiData(link)
         returnValue = returnValue.replace("https://mixer.com/_latest/assets/images/main/avatars/default.jpg", "[Avatar not found]")
-        parseString = parseString.replace("$avatar", returnValue)
+        parseString = parseString.replace("$avatar", returnValue).replace(targetname,"")
 
     if "$subemotes" in parseString:
         link = SubEmotesApi.replace("$mychannel", Parent.GetChannelName())
@@ -986,7 +992,6 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 parseString = parseString.replace(fullSound, "[ERROR: Soundfile not found]")
 
     if "$gif" in parseString:
-
         result = RegGif.search(parseString)
         if result:
             fullGif = result.group(0)
@@ -1003,6 +1008,25 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             parseString = parseString.replace(fullGif, "")
         else:
             parseString = parseString.replace("$gif", "[ERROR: Seems like you have a space in the () or forgot to set a time]")
+
+    if "$text(" in parseString:
+        result = RegText.search(parseString)
+        #Parent.Log("text result", parseString)
+        if result:
+            fullText = result.group(0)
+            textMessage = result.group("message").replace("+", " ")
+            textStyle = result.group("style")
+            textDuration = int(result.group("duration"))
+
+            Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
+
+            # broadcast messge
+            f = {"duration": textDuration*1000, "message": textMessage, "style": textStyle}
+            #Parent.BroadcastWsEvent("EVENT_TEXT", json.dumps(f, encoding='utf-8-sig'))
+
+            parseString = parseString.replace(fullText, "")
+        else:
+            parseString = parseString.replace("$text", "[ERROR: Seems like you have a space in the () or forgot to set a time]")
 
     if "$cdummy" in parseString:
         if len(message) > 1:
@@ -1304,6 +1328,9 @@ RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<countdown>\d+)"
                     r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']*)"
                     r"[\ ]*\,[\ ]*(?P<starttime>\d*)[\ ]*\))", re.U)
+RegText = re.compile(r"(?:\$text\([\ ]*(?P<message>[^\"\']+)"
+                    r"[\ ]*\,[\ ]*(?P<style>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
 RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)
