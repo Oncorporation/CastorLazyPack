@@ -1,16 +1,25 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.4.7
+**Latest Version:** 1.4.8
 
-**Download:** [CastorrsLazyPack1.4.7.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.7/CastorLazyPack1.4.7.zip)
+**Download:** [CastorrsLazyPack1.4.8.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.8/CastorLazyPack1.4.8.zip)
 
-**Updated:** Charles Fettinger 2019-01-02
+**Updated:** Charles Fettinger 2019-01-15
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+	1.4.8 by Charles Fettinger 2019-01-15
+    - Added $text <MESSAGE>,<STYLE>,<DURATION>
+	- use + for spaces in message
+    - Modified $avatar to remove username
+    - Added text.css to hold standard styles for text
+
+	1.4.7.1 by Charles Fettinger 2019-01-05
+	- bug fix to vuejs branch
+
 	1.4.7 by Charles Fettinger 2019-01-02
     - Tweaks to text responses to $movie, $gif, etc - disabled
 
