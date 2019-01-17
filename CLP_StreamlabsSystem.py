@@ -1015,7 +1015,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:
             fullText = result.group(0)
             textMessage = result.group("message").replace("+", " ")
-            textStyle = result.group("style")
+            textStyle = result.group("style").replace("+", " ")
             textDuration = int(result.group("duration"))
 
             #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))

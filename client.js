@@ -65,11 +65,15 @@ if (window.WebSocket) {
                 callback();
                 break;
             case 'text':
-                var text = document.getElementById('mytext');
+                var text = document.getElementById('mytext'); 
+                var styles = MySet.style.split(" ");
                 text.innerHTML = MySet.message;
                 removeClass(text, 'hidden');
                 if (MySet.style) {
-                    addClass(text, MySet.style);
+                    for (var style in styles)
+                    {
+                        addClass(text, styles[style]);
+                    }
                 }
                 else {
                     addClass(text, 'normal');
@@ -78,7 +82,10 @@ if (window.WebSocket) {
 
                 addClass(text, 'hidden');
                 if (MySet.style) {
-                    removeClass(text, MySet.style);
+                    for (var style in styles)
+                    {
+                        removeClass(text, styles[style]);
+                    }
                 }
                 else {
                     removeClass(text, 'normal');
