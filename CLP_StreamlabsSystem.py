@@ -1018,11 +1018,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             textStyle = result.group("style")
             textDuration = int(result.group("duration"))
 
-            Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
+            #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
 
             # broadcast messge
             f = {"duration": textDuration*1000, "message": textMessage, "style": textStyle}
-            #Parent.BroadcastWsEvent("EVENT_TEXT", json.dumps(f, encoding='utf-8-sig'))
+            Parent.BroadcastWsEvent("EVENT_TEXT", json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.replace(fullText, "")
         else:
