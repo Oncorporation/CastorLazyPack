@@ -1,6 +1,16 @@
 .normal {
 	font-size: 11vmin;
 	color: #000000;
+	font-family: Tahoma,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align:center;
+}
+.sunny {
+	font-size: 11vmin;
+	color: #000000;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	background-color: transparent;
 	background-image: url(videos/sunny.gif);
