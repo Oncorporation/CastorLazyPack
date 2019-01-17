@@ -187,10 +187,12 @@ Completely new parameters, most of them are doable through api calls.
 	$torand         - Returns target and random user if no target is present
 	$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder.
 	$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) - counts down to sync players in various games, set the message, optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
+	$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,reactor,spin included)
 	$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
 	$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
 	$movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
 	$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
+	$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>) - Shows a Twitch Clip linked in the index.html starting at <START TIME> for <DURATION> seconds.
 	$default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
 #############################
@@ -217,10 +219,12 @@ Completely new parameters, most of them are doable through api calls.
 	$lastfollow             - https://gyazo.com/01d308e6bf46500f340eb49f524816aa
 	$torand                 - https://gyazo.com/ba07e41cecddd874fc62f48b46d31f46
 	$sound(FILE.FORMAT)     - https://gyazo.com/cb2924f03ae3533f2b669153ff1fb5ee
-	$sync			- https://ibb.co/b9V20L or https://ibb.co/iqJi70 (no video)
-	$gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
+	$sync					- https://ibb.co/b9V20L or https://ibb.co/iqJi70 (no video)
+	$text(<MESSAGE>,<STYLE>,<DURATION>)	- https://ibb.co/H7PfhNH
+	$gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2	
 	$giphy(<SEARCH TERM>,<DURATION>)	- https://ibb.co/exwLn0	
 	$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)	- https://ibb.co/cJAPEf
+	$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>)	- https://ibb.co/fHq4G1G
 	$movie(<LINK>,<START TIME>,<DURATION>)	- https://ibb.co/cHP6S0
 
 #############################
@@ -392,4 +396,5 @@ There is an entire help channel set up to help you
 # https://discordapp.com/invite/J4QMG5m #
 #########################################
 ```
+
 
