@@ -10,6 +10,9 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.9 by Charles Fettinger 2019-01-17
+    - Maintenance version combining view branch with main branch.
+    
 1.4.8 by Charles Fettinger 2019-01-15
     - Added $text <MESSAGE>,<STYLE>,<DURATION>
 	- use + for spaces in message
@@ -186,7 +189,7 @@ $sessionfollows - Show amount of follows for current session
 $lastfollow     - Returns name of last follower
 $torand         - Returns target and random user if no target is present
 $sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
-$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,reactor,spin included)
+$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,sparks,spin included)
 $gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
 $giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
 $movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)

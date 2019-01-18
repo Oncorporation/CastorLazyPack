@@ -1,16 +1,19 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.4.8
+**Latest Version:** 1.4.9
 
-**Download:** [CastorrsLazyPack1.4.8.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.8/CastorLazyPack1.4.8.zip)
+**Download:** [CastorrsLazyPack1.4.9.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPack1.4.9/CastorLazyPack1.4.9.zip)
 
-**Updated:** Charles Fettinger 2019-01-15
+**Updated:** Charles Fettinger 2019-01-17
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+	1.4.9 by Charles Fettinger 2019-01-17
+	- Maintenance version combining view branch with main branch.
+	
 	1.4.8 by Charles Fettinger 2019-01-15
     - Added $text <MESSAGE>,<STYLE>,<DURATION>
 	- use + for spaces in message
@@ -187,7 +190,7 @@ Completely new parameters, most of them are doable through api calls.
 	$torand         - Returns target and random user if no target is present
 	$sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder.
 	$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) - counts down to sync players in various games, set the message, optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
-	$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,reactor,spin included)
+	$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,sparks,spin included as examples)
 	$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
 	$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
 	$movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)

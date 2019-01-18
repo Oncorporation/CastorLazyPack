@@ -34,6 +34,19 @@
 	-webkit-text-fill-color: transparent;
 	text-align: center;
 }
+.sparks {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/sparks.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
 .spin {
 	font-size: 11vmin;
 	color: #000000;

@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.8"
+Version = "1.4.9"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.9 by Charles Fettinger 2019-01-17
+	- Maintenance version combining view branch with main branch.
+
 1.4.8 by Charles Fettinger 2019-01-15
     - Added $text <MESSAGE>,<STYLE>,<DURATION>
 	- use + for spaces in message
