@@ -37,6 +37,10 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.4.91 by Charles Fettinger 2019-02-28
+    - Add shine $text effect
+    - Convert <DURATION> to allow partial seconds i.e. 10.5 seconds
+
 1.4.9 by Charles Fettinger 2019-01-17
 	- Maintenance version combining view branch with main branch.
 
@@ -687,7 +691,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
     """Grabs a random gif from Giphy based on your search term 
         $giphy(search term, duration seconds)
-        $giphy(Epic+Fail, 15)
+        $giphy(Epic+Fail, 15.5)
         NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$giphy(" in parseString:                
@@ -702,7 +706,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             errorString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
             if result:              
                 fullGif = result.group(0)
-                gifDuration = int(result.group("duration"))
+                gifDuration = int(float(result.group("duration")) *1000)
                 GifSearch = result.group("search")
                 errorString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
                 """check search term for results"""
@@ -717,7 +721,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                     GiphyImageId = GetApiGiphyId(api,GifSearch)
                     GifLink = MySet.giphyimageurl.format(GiphyImageId)
                     """broadcast image using existing gif code"""
-                    f = {"duration": gifDuration*1000, "link": GifLink}
+                    f = {"duration": gifDuration, "link": GifLink}
                     Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
                     errorString = None
                
@@ -729,8 +733,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         
 
     """Plays a youtube video
-        $movyt(videoid, start seconds, duration seconds)
-        $movyt(Vz7SS2qh-6k, 50, 15)
+        $movyt(videoid, start milliseconds, duration seconds)
+        $movyt(Vz7SS2qh-6k, 500, 15.2)
     """
     if "$movyt(" in parseString:   
         #Parent.Log("movyt Result", parseString)
@@ -738,14 +742,14 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
         if result:                
             fullMov = result.group(0)
-            movDuration = int(result.group("duration"))
+            movDuration = int(float(result.group("duration")) *1000)
             movStart = int(result.group("start"))                    
             movLink = result.group("link")
 
             #Parent.Log("movyt Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
         
             """broadcast movie url"""
-            f = {"link": movLink, "start": movStart, "duration": movDuration*1000}
+            f = {"link": movLink, "start": movStart, "duration": movDuration}
             Parent.BroadcastWsEvent("EVENT_YUT", json.dumps(f, encoding='utf-8-sig'))
                         
             parseString = parseString.Replace(fullMov,"")
@@ -755,7 +759,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
     """Plays a Twitch Clip in html 5
        $movtw(id, start seconds, duration seconds) 
-       $movtw(BlushingVastFloofPeteZaroll,10,20)
+       $movtw(BlushingVastFloofPeteZaroll,10,20.5)
        NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$movtw(" in parseString:
@@ -768,7 +772,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             errorString = "[ERROR: Seems like you have a space in the () or forgot to set a parameter]"
             if result:
                 fullMov = result.group(0)
-                movDuration = int(result.group("duration"))
+                movDuration = int(float(result.group("duration")) *1000)
                 movStart = int(result.group("start"))                    
                 movLink = result.group("link")
                 header = {"Client-ID": MySet.twitchapikey}
@@ -785,7 +789,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                     errorString = "[ERROR: Movie Clip Not Found]" 
                     if(len(movLink) > 1):
                         #broadcast twitch clip url 
-                        f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
+                        f = {"link": movLink, "start": movStart, "duration": movDuration, "type": movType, "uri": useURI}
                         Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
                         errorString = None
 
@@ -798,7 +802,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
     """Plays a video in html 5
         $movie(url, start seconds, duration seconds)
-        $movie(https://i.giphy.com/media/l0Iy7oLKbCIrcOS1q/200.mp4, 5, 15)
+        $movie(https://i.giphy.com/media/l0Iy7oLKbCIrcOS1q/200.mp4, 5, 15.5)
     """
     if "$movie(" in parseString:   
         #Parent.Log("movie Result", parseString)
@@ -807,7 +811,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
         if result:                
             fullMov = result.group(0)
-            movDuration = int(result.group("duration"))
+            movDuration = int(float(result.group("duration")) *1000)
             movStart = int(result.group("start"))
             movLink = result.group("link")
             pathResult = RegPath.search(movLink)
@@ -823,7 +827,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             #Parent.Log("movie Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
         
             #broadcast movie url 
-            f = {"link": movLink, "start": movStart, "duration": movDuration*1000, "type": movType, "uri": useURI}
+            f = {"link": movLink, "start": movStart, "duration": movDuration, "type": movType, "uri": useURI}
             Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.Replace(fullMov,"")
@@ -1004,8 +1008,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             if pathResult:
                 GifLink = GetDataURI(GifLink,"image")
 
-            gifDuration = int(result.group("duration"))
-            f = {"duration": gifDuration*1000, "link": GifLink}
+            gifDuration = int(float(result.group("duration")) *1000)
+            f = {"duration": gifDuration, "link": GifLink}
             Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.replace(fullGif, "")
@@ -1019,12 +1023,12 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             fullText = result.group(0)
             textMessage = result.group("message").replace("+", " ")
             textStyle = result.group("style").replace("+", " ")
-            textDuration = int(result.group("duration"))
+            textDuration = int(float(result.group("duration")) *1000)
 
             #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
 
             # broadcast messge
-            f = {"duration": textDuration*1000, "message": textMessage, "style": textStyle}
+            f = {"duration": textDuration, "message": textMessage, "style": textStyle}
             Parent.BroadcastWsEvent("EVENT_TEXT", json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.replace(fullText, "")

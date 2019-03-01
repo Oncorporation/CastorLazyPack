@@ -34,6 +34,49 @@
 	-webkit-text-fill-color: transparent;
 	text-align: center;
 }
+.shine {
+    font-size: 11vmin;
+    color: #000000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: transparent;
+    background-image: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+    overflow: hidden;
+}
+.shine:before {
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-image: -webkit-linear-gradient(top left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 52%, rgba(255, 255, 255, 0) 57%, rgba(255, 255, 255, 0) 100%);
+        -webkit-animation-name: ShineAnimation;
+        -webkit-animation-duration: 5s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
+        -moz-animation-name: ShineAnimation;
+        -moz-animation-duration: 5s;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
+        -ms-animation-name: ShineAnimation;
+        -ms-animation-duration: 5s;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        z-index: 2;
+        -webkit-transform: skew(-20deg);
+        transform: skew(-20deg);
+    }
 .sparks {
 	font-size: 11vmin;
 	color: #000000;
@@ -72,7 +115,6 @@
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-timing-function: ease;
 	-o-transition: rotate(3600deg);
-
 }
 .matrix {
 	font-size: 11vmin;
@@ -209,4 +251,43 @@
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
+}
+
+@-moz-keyframes ShineAnimation {
+    from {left: -100%;}
+
+    to {left: 100%;}
+}
+@-webkit-keyframes ShineAnimation {
+    from {left: -100%;}
+
+    to {left: 100%;}
+}
+@keyframes ShineAnimation {
+    from {left: -100%;}
+
+    to {left: 100%;}
+}
+@-webkit-keyframes Gradient {
+    0% {background-position: 0% 50%}
+
+    50% {background-position: 100% 50%}
+
+    100% {background-position: 0% 50%}
+}
+
+@-moz-keyframes Gradient {
+    0% {background-position: 0% 50%}
+
+    50% {background-position: 100% 50%}
+
+    100% {background-position: 0% 50%}
+}
+
+@keyframes Gradient {
+    0% {background-position: 0% 50%}
+
+    50% {background-position: 100% 50%}
+
+    100% {background-position: 0% 50%}
 }
