@@ -10,6 +10,21 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.4.9 by Charles Fettinger 2019-01-17
+    - Maintenance version combining view branch with main branch.
+    
+1.4.8 by Charles Fettinger 2019-01-15
+    - Added $text <MESSAGE>,<STYLE>,<DURATION>
+	- use + for spaces in message
+    - Modified $avatar to remove username
+    - Added text.css to hold standard styles for text
+
+1.4.7.1 by Charles Fettinger 2019-01-05
+	- bug fix to vuejs branch
+	
+1.4.7 by Charles Fettinger 2019-01-02
+    - Tweaks to text responses to $movie, $gif, etc - disabled
+
 1.4.6 by Charles Fettinger 2019-01-01
     - Update to consolidate browser sources into one queue
 
@@ -174,11 +189,12 @@ $sessionfollows - Show amount of follows for current session
 $lastfollow     - Returns name of last follower
 $torand         - Returns target and random user if no target is present
 $sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
-$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE VIDEO ID>,<START TIME>) - counts down to sync players in various games, set the message, optionally set a youtube video to play during the count down (if not used leave empty) and set start time of video
+$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,sparks,spin included)
 $gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
 $giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
 $movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
 $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
+$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>) - Shows a Twitch Clip linked in the index.html starting at <START TIME> for <DURATION> seconds.
 $default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
 
@@ -207,9 +223,11 @@ $lastfollow             - https://gyazo.com/01d308e6bf46500f340eb49f524816aa
 $torand                 - https://gyazo.com/ba07e41cecddd874fc62f48b46d31f46
 $sound(FILE.FORMAT)     - https://gyazo.com/cb2924f03ae3533f2b669153ff1fb5ee
 $sync			- https://ibb.co/b9V20L or https://ibb.co/iqJi70 (no video)
+$text(<MESSAGE>,<STYLE>,<DURATION>) - https://ibb.co/H7PfhNH
 $gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
 $giphy(<SEARCH TERM>,<DURATION>)	- https://ibb.co/exwLn0	
 $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)	- https://ibb.co/cJAPEf
+$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>)   - https://ibb.co/fHq4G1G
 $movie(<LINK>,<START TIME>,<DURATION>)	- https://ibb.co/cHP6S0
 
 #############################

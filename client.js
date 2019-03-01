@@ -64,6 +64,37 @@ if (window.WebSocket) {
                 youtube.removeAttribute('src');
                 callback();
                 break;
+            case 'text':
+                var text = document.getElementById('mytext'); 
+                var styles = MySet.style.split(" ");
+                text.innerHTML = MySet.message;
+                removeClass(text, 'hidden');
+                if (MySet.style) {
+                    for (var style in styles)
+                    {
+                        addClass(text, styles[style]);
+                    }
+                }
+                else {
+                    addClass(text, 'normal');
+                }
+                await timeout(MySet.duration);
+
+                addClass(text, 'hidden');
+                if (MySet.style) {
+                    for (var style in styles)
+                    {
+                        removeClass(text, styles[style]);
+                    }
+                }
+                else {
+                    removeClass(text, 'normal');
+                }
+                await timeout(1000);
+
+                text.innerHTML = "";
+                callback();
+                break;
             case 'img':
             default:
                 //show gif
@@ -101,7 +132,7 @@ if (window.WebSocket) {
             website: "https://www.twitch.tv/surn",
             api_key: API_Key,
             events: [
-                "EVENT_GIF", "EVENT_MOV", "EVENT_YUT"
+                "EVENT_GIF", "EVENT_MOV", "EVENT_YUT", "EVENT_TEXT"
             ]
         };
         //Send your Data to the server
@@ -123,19 +154,24 @@ if (window.WebSocket) {
             console.log("Parsed" + jsonObject);
         }
 
-        if (jsonObject.event === "EVENT_GIF") {
-            MySet.element = 'img';
-            imgqueue.push(MySet);
-        }
-
-        if (jsonObject.event === "EVENT_MOV") {
-            MySet.element = 'video';
-            imgqueue.push(MySet);
-        }
-
-        if (jsonObject.event === "EVENT_YUT") {
-            MySet.element = 'framesrc';
-            imgqueue.push(MySet);
+        switch (jsonObject.event) {
+            case "EVENT_GIF":
+                MySet.element = 'img';
+                imgqueue.push(MySet);
+                break;
+            case "EVENT_MOV":
+                MySet.element = 'video';
+                imgqueue.push(MySet);
+                break;
+            case "EVENT_YUT":
+                MySet.element = 'framesrc';
+                imgqueue.push(MySet);
+                break;
+            case "EVENT_TEXT":
+                MySet.element = 'text';
+                imgqueue.push(MySet);
+                break;
+            default:
         }
     };
 

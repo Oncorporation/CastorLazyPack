@@ -6,7 +6,7 @@
     <script src="API_Key.js"></script>
     <script src="settings.js"></script>
     <script src="async.js"></script>
-    <style>
+    <style type="text/css">
         .container {
             position: relative;
             width: 100%;
@@ -26,13 +26,13 @@
             display: block;
             visibility: visible;
             opacity: 1;
-            transition: visibility .75s, opacity .75s ease-out;
+            transition: visibility 1.0s, opacity 1.0s ease-out;
         }
 
         .hidden {
             opacity: 0 !important;
             visibility: hidden !important;
-            transition: visibility .75s, opacity .75s ease-out;
+            transition: visibility .90s, opacity .90s ease-out;
             /*display:none !important;*/
         }
 
@@ -45,9 +45,10 @@
             z-index: 1000;
             opacity: 0.65;
             visibility: visible;
-            transition: visibility .75s, opacity .75s ease-out;
+            transition: visibility 1.0s, opacity 1.0s ease-out;
         }
     </style>
+    <link rel="stylesheet" href="text.css" type="text/css" media="screen">
 </head>
 <body>	
  	<script src="client.js"></script>  	
@@ -58,6 +59,8 @@
   			Your browser does not support the video tag.
 		</video>	
 		<iframe id="myyut" class="video hidden" allow="autoplay; fullscreen" frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true">
+        </iframe>
+        <div id="mytext" class="video hidden"></div>
 	</div>
 </body>
 </html>

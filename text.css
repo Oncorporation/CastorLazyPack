@@ -1,0 +1,212 @@
+.normal {
+	font-size: 11vmin;
+	color: #999999;
+	font-family: Tahoma,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align:center;
+}
+.sunny {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/sunny.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align:center;
+}
+.reactor {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/reactor.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.sparks {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/sparks.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.spin {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/spin.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+	-webkit-animation-name: spin;
+	-webkit-animation-duration: 5000ms;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease;
+	-moz-animation-name: spin;
+	-moz-animation-duration: 5000ms;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease;
+	-ms-animation-name: spin;
+	-ms-animation-duration: 5000ms;
+	-ms-animation-iteration-count: infinite;
+	-ms-animation-timing-function: ease;
+	-o-transition: rotate(3600deg);
+
+}
+.matrix {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/matrixcode.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.blue {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/blue.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+.glitch {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/glitch.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+	-webkit-animation: swing 0.3s ease;
+     animation: swing 0.3s ease;
+     -webkit-animation-iteration-count: infinite;
+     animation-iteration-count: infinite;
+}
+.fire {
+	font-size: 11vmin;
+	color: #000000;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background-color: transparent;
+	background-image: url(videos/fire.gif);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-align: center;
+}
+
+@-webkit-keyframes swing
+{
+    15%
+    {
+        -webkit-transform: translateX(5px);
+        transform: translateX(5px);
+    }
+    30%
+    {
+        -webkit-transform: translateX(-5px);
+       transform: translateX(-5px);
+    } 
+    50%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    65%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    80%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+@keyframes swing
+{
+    15%
+    {
+        -webkit-transform: translateX(5px);
+        transform: translateX(5px);
+    }
+    30%
+    {
+        -webkit-transform: translateX(-5px);
+        transform: translateX(-5px);
+    }
+    50%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    65%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    80%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
