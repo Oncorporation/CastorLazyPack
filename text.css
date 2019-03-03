@@ -39,45 +39,23 @@
     color: #000000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: transparent;
-    background-image: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-image: -webkit-linear-gradient(top left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 52%, rgba(255, 255, 255, 0) 57%, rgba(255, 255, 255, 0) 100%), linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-background-clip: text;
+    -webkit-background-clip: text, text;
+    background-clip: text, text;
+    -webkit-transform: skew(-20deg), none;
+    transform: skew(-20deg), none;
     -webkit-text-fill-color: transparent;
     text-align: center;
     background-size: 400% 400%;
-    -webkit-animation: Gradient 15s ease infinite;
-    -moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    -webkit-animation: Shine 15s ease infinite;
+    -moz-animation: Shine 15s ease infinite;
+    animation: Shine 15s ease infinite;
     overflow: hidden;
 }
-.shine:before {
-        width: 140%;
-        height: 140%;
-        content: "";
-        background-image: -webkit-linear-gradient(top left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 52%, rgba(255, 255, 255, 0) 57%, rgba(255, 255, 255, 0) 100%);
-        -webkit-animation-name: ShineAnimation;
-        -webkit-animation-duration: 5s;
-        -webkit-animation-iteration-count: infinite;
-        -webkit-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
-        -moz-animation-name: ShineAnimation;
-        -moz-animation-duration: 5s;
-        -moz-animation-iteration-count: infinite;
-        -moz-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
-        -ms-animation-name: ShineAnimation;
-        -ms-animation-duration: 5s;
-        -ms-animation-iteration-count: infinite;
-        -ms-animation-timing-function: cubic-bezier(0.12, 0.89, 0.98, 0.47);
-        display: block;
-        position: absolute;
-        /*-webkit-background-clip: text;*/
-        top: -40%;
-        left: -140%;
-        z-index: 2;
-        -webkit-transform: skew(-20deg);
-        transform: skew(-20deg);
-    }
+
 .sparks {
 	font-size: 11vmin;
 	color: #000000;
@@ -104,15 +82,15 @@
 	-webkit-text-fill-color: transparent;
 	text-align: center;
 	-webkit-animation-name: spin;
-	-webkit-animation-duration: 5000ms;
+	-webkit-animation-duration: 7500ms;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: ease;
 	-moz-animation-name: spin;
-	-moz-animation-duration: 5000ms;
+	-moz-animation-duration: 7500ms;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-timing-function: ease;
 	-ms-animation-name: spin;
-	-ms-animation-duration: 5000ms;
+	-ms-animation-duration: 7500ms;
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-timing-function: ease;
 	-o-transition: rotate(3600deg);
@@ -281,7 +259,6 @@
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
 }
-
 @-webkit-keyframes spin3d {
 	from { -webkit-transform: rotateY(0deg);    }
 	to   { -webkit-transform: rotateY(-360deg); }
@@ -299,21 +276,6 @@
 	}
 }
 
-@-moz-keyframes ShineAnimation {
-    from {left: -100%;}
-
-    to {left: 100%;}
-}
-@-webkit-keyframes ShineAnimation {
-    from {left: -100%;}
-
-    to {left: 100%;}
-}
-@keyframes ShineAnimation {
-    from {left: -100%;}
-
-    to {left: 100%;}
-}
 @-webkit-keyframes Gradient {
     0% {background-position: 0% 50%}
 
@@ -336,4 +298,28 @@
     50% {background-position: 100% 50%}
 
     100% {background-position: 0% 50%}
+}
+
+@keyframes Shine {
+    0% {
+        background-position: 100% 50%, 0% 50%
+    }
+    20% {
+        background-position: 50% 50%, 33% 50%
+    }
+    40% {
+        background-position: 0% 50%, 66% 50%
+    }
+    50% {
+        background-position: 50% 50%, 100% 50%
+    }
+    60% {
+        background-position: 100% 50%, 66% 50%
+    }
+    80% {
+        background-position: 50% 50%, 33% 50%
+    }
+    100% {
+        background-position: 0% 50%, 0% 50%
+    }
 }

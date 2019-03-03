@@ -11,7 +11,7 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #         Versions          #
 #############################
 1.4.91 by Charles Fettinger 2019-02-28
-    - Add shine $text effect
+    - Add shine,spin3d $text effect
     - Convert <DURATION> to allow partial seconds i.e. 10.5 seconds
 
 1.4.9 by Charles Fettinger 2019-01-17
