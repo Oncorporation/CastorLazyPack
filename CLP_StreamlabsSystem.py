@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.9"
+Version = "1.4.9.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,7 +37,8 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
-1.4.91 by Charles Fettinger 2019-02-28
+1.4.9.1
+by Charles Fettinger 2019-02-28
     - Add shine, spin3d $text effects
     - Convert <DURATION> to allow partial seconds i.e. 10.5 seconds
 
@@ -1329,7 +1330,7 @@ RegGif = re.compile(r"(?:\$gif\([\ ]*(?P<link>[^\"\']+)"
 RegGiphy = re.compile(r"(?:\$giphy\([\ ]*(?P<search>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
 RegMovie = re.compile(r"(?:\$mov..\([\ ]*(?P<link>[^\"\'\,]+)"
-                    r"[\ ]*\,[\ ]*(?P<start>[^\"\']+)"
+                    r"[\ ]*\,[\ ]*(?P<start>[^\"\']*)"
                     r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
 RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<countdown>\d+)"
