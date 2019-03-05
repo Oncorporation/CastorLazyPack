@@ -125,14 +125,20 @@ if (window.WebSocket) {
     //---------------------------------
     //  Events
     //---------------------------------
+    var targetSuffix = "";
+
     socket.onopen = function () {
+        // get current target information
+        var targetRegEx = new RegExp(/(?<target>[^\"\'\,\s\|\'\`]+)/);
+        var matches = targetRegEx.exec(document.title);
+        targetSuffix = (matches.groups.target === "CLP") ? "" : "_" + matches.groups.target.toLowerCase();
         // Format your Authentication Information
         var auth = {
             author: "Surn",
             website: "https://www.twitch.tv/surn",
             api_key: API_Key,
             events: [
-                "EVENT_GIF", "EVENT_MOV", "EVENT_YUT", "EVENT_TEXT"
+                "EVENT_GIF" + targetSuffix, "EVENT_MOV" + targetSuffix, "EVENT_YUT" + targetSuffix, "EVENT_TEXT" + targetSuffix
             ]
         };
         //Send your Data to the server
@@ -151,27 +157,27 @@ if (window.WebSocket) {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
             MySet.element = '';
-            console.log("Parsed" + jsonObject);
-        }
+            console.log("Parsed" + jsonObject);        
 
-        switch (jsonObject.event) {
-            case "EVENT_GIF":
-                MySet.element = 'img';
-                imgqueue.push(MySet);
-                break;
-            case "EVENT_MOV":
-                MySet.element = 'video';
-                imgqueue.push(MySet);
-                break;
-            case "EVENT_YUT":
-                MySet.element = 'framesrc';
-                imgqueue.push(MySet);
-                break;
-            case "EVENT_TEXT":
-                MySet.element = 'text';
-                imgqueue.push(MySet);
-                break;
-            default:
+            switch (jsonObject.event) {
+                case "EVENT_GIF" + targetSuffix:
+                    MySet.element = 'img';
+                    imgqueue.push(MySet);
+                    break;
+                case "EVENT_MOV" + targetSuffix:
+                    MySet.element = 'video';
+                    imgqueue.push(MySet);
+                    break;
+                case "EVENT_YUT" + targetSuffix:
+                    MySet.element = 'framesrc';
+                    imgqueue.push(MySet);
+                    break;
+                case "EVENT_TEXT" + targetSuffix:
+                    MySet.element = 'text';
+                    imgqueue.push(MySet);
+                    break;
+                default:
+            }
         }
     };
 

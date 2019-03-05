@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.4.9.1"
+Version = "1.5"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,8 +37,21 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
-1.4.9.1
-by Charles Fettinger 2019-02-28
+1.5 By Charles Fettinger 2019-03-05
+	- Expand multiple commands to include infinite browser source targets
+		- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $movie(<LINK>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE ID>,<TARGET BROWSER SOURCE>)
+        - $text(<MESSAGE>,<STYLE>,<DURATION>,<TARGET BROWSER SOURCE>) 
+        - $gif(<LINK>,<DURATION>,<TARGET BROWSER SOURCE>)	
+        - $giphy(<SEARCH TERM>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+    - Change Title index.html/index_vue.html: <title>CLP Overlay</title> This title is now used to identify Overlay browser.
+        - The first word of page title <TARGET BROWSER SOURCE> is used, except "CLP" which is blank for backward compatibility.
+        - This value is always converted to lowercase
+    - Convert <START TIME> to allow partial seconds i.e. 10.5 seconds
+
+1.4.9.1 by Charles Fettinger 2019-02-28
     - Add shine, spin3d $text effects
     - Convert <DURATION> to allow partial seconds i.e. 10.5 seconds
 
@@ -352,7 +365,7 @@ def GetApiDataCount(link, header = {}):
     fail = "fail"
     false = False
     true = True
-    Parent.Log("CLP GADC", "header:" + str(header) + " link:"+ link)
+    #Parent.Log("CLP GADC", "header:" + str(header) + " link:"+ link)
     try:        
         response = Parent.GetRequest(link, header)
         #Parent.Log("CLP GADC", response)
@@ -380,7 +393,7 @@ def GetApiTwitchLink(link, header = {}):
     fail = "fail"
     false = False
     true = True
-    Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
+    #Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
     try:        
         response = Parent.GetRequest(link, header)
         #Parent.Log("CLP GATL", response)
@@ -398,7 +411,7 @@ def GetApiTwitchLink(link, header = {}):
         
         if(len(data['data'][0]['thumbnail_url']) > 2):
             apilink = data['data'][0]['thumbnail_url'].replace("-preview-480x272.jpg",".mp4") 
-        Parent.Log("CLP GATL",apilink)      
+        #Parent.Log("CLP GATL",apilink)      
     except:
         Parent.Log("CLP GATL","failure " + "header:" + header + " link:"+ link)
     finally:
@@ -410,7 +423,7 @@ def GetApiTwitchDictionary(link, header = {}):
     fail = "fail"
     false = False
     true = True
-    Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
+    #Parent.Log("CLP GATL", "header:" + str(header) + " link:"+ link)
     try:        
         response = Parent.GetRequest(link, header)
         #Parent.Log("CLP GATL", response)
@@ -665,8 +678,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         else:
             parseString = parseString.replace("$weather(", WeatherApi.format("metric"))
 
-    """ $sync(message, countdown, youtubeid, start time)
-        $sync(Click Launch!, 3, Vz7SS2qh-6k, 50)
+    """ $sync(message, countdown, youtubeid, start time, browser source target)
+        $sync(Click Launch!, 3, Vz7SS2qh-6k, 50,)
     """
     if "$sync(" in parseString:
         """Parent.Log("sync","-enter-")"""
@@ -678,10 +691,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             count = int(result.group("countdown"))
             message = result.group("message")
             ytid = result.group("ytid")
-            starttime = int(result.group("starttime"))
+            target = "_" + result.group("target").toLower() if len(result.group("target")) > 0 else "" ;
+            starttime = result.group("starttime")
             if (len(ytid) > 1):
                 f = {"link": ytid, "start": starttime, "duration": 17000}
-                Parent.BroadcastWsEvent("EVENT_YUT", json.dumps(f, encoding='utf-8-sig'))
+                Parent.BroadcastWsEvent("EVENT_YUT"+ target, json.dumps(f, encoding='utf-8-sig'))
 
         for step in range(count, 0, -1):
             Parent.SendStreamMessage("  %d" % (step))
@@ -691,8 +705,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         parseString = message
 
     """Grabs a random gif from Giphy based on your search term 
-        $giphy(search term, duration seconds)
-        $giphy(Epic+Fail, 15.5)
+        $giphy(search term, duration seconds, browser source target)
+        $giphy(Epic+Fail, 15.5,)
         NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$giphy(" in parseString:                
@@ -705,10 +719,12 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             apicheck = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, 0, MySet.language, MySet.giphyrating)
             result = RegGiphy.search(parseString)
             errorString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
+            Parent.Log("giphy result", parseString)
             if result:              
                 fullGif = result.group(0)
                 gifDuration = int(float(result.group("duration")) *1000)
                 GifSearch = result.group("search")
+                target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
                 errorString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
                 """check search term for results"""
                 totalcount = GetApiGiphyTotalCount(apicheck, GifSearch)
@@ -723,7 +739,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                     GifLink = MySet.giphyimageurl.format(GiphyImageId)
                     """broadcast image using existing gif code"""
                     f = {"duration": gifDuration, "link": GifLink}
-                    Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
+                    Parent.BroadcastWsEvent("EVENT_GIF"+ target, json.dumps(f, encoding='utf-8-sig'))
                     errorString = None
                
         if (errorString == None):
@@ -734,8 +750,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         
 
     """Plays a youtube video
-        $movyt(videoid, start milliseconds, duration seconds)
-        $movyt(Vz7SS2qh-6k, 500, 15.2)
+        $movyt(videoid, start milliseconds, duration seconds, browser source target)
+        $movyt(Vz7SS2qh-6k, 500, 15.2,)
     """
     if "$movyt(" in parseString:   
         #Parent.Log("movyt Result", parseString)
@@ -744,14 +760,15 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:                
             fullMov = result.group(0)
             movDuration = int(float(result.group("duration")) *1000)
-            movStart = int(result.group("start"))                    
+            movStart = result.group("start")
             movLink = result.group("link")
+            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
 
             #Parent.Log("movyt Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
         
             """broadcast movie url"""
             f = {"link": movLink, "start": movStart, "duration": movDuration}
-            Parent.BroadcastWsEvent("EVENT_YUT", json.dumps(f, encoding='utf-8-sig'))
+            Parent.BroadcastWsEvent("EVENT_YUT" + target, json.dumps(f, encoding='utf-8-sig'))
                         
             parseString = parseString.Replace(fullMov,"")
             #Parent.SendStreamMessage("Playing for " + str(movDuration) + " seconds") #movLink #parseString.replace(fullGif, "")
@@ -759,8 +776,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             parseString = "[ERROR: Seems like you have a space in the () or forgot to set a parameter]"
 
     """Plays a Twitch Clip in html 5
-       $movtw(id, start seconds, duration seconds) 
-       $movtw(BlushingVastFloofPeteZaroll,10,20.5)
+       $movtw(id, start seconds, duration seconds, browser source target) 
+       $movtw(BlushingVastFloofPeteZaroll,10.1,20.5,left)
        NOTE:error messages are part of the flow, if no error occurs-return original parsestring
     """
     if "$movtw(" in parseString:
@@ -774,8 +791,9 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             if result:
                 fullMov = result.group(0)
                 movDuration = int(float(result.group("duration")) *1000)
-                movStart = int(result.group("start"))                    
+                movStart = result.group("start")
                 movLink = result.group("link")
+                target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
                 header = {"Client-ID": MySet.twitchapikey}
                 totalcount = GetApiDataCount(ClipsApi.format(movLink), header)
                 movType = "video/mp4"
@@ -791,7 +809,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                     if(len(movLink) > 1):
                         #broadcast twitch clip url 
                         f = {"link": movLink, "start": movStart, "duration": movDuration, "type": movType, "uri": useURI}
-                        Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
+                        Parent.BroadcastWsEvent("EVENT_MOV" + target, json.dumps(f, encoding='utf-8-sig'))
                         errorString = None
 
         if (errorString == None):
@@ -802,8 +820,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
  
 
     """Plays a video in html 5
-        $movie(url, start seconds, duration seconds)
-        $movie(https://i.giphy.com/media/l0Iy7oLKbCIrcOS1q/200.mp4, 5, 15.5)
+        $movie(url, start seconds, duration seconds, browser source target)
+        $movie(https://i.giphy.com/media/l0Iy7oLKbCIrcOS1q/200.mp4, 5.5, 15.5)
     """
     if "$movie(" in parseString:   
         #Parent.Log("movie Result", parseString)
@@ -813,8 +831,9 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:                
             fullMov = result.group(0)
             movDuration = int(float(result.group("duration")) *1000)
-            movStart = int(result.group("start"))
+            movStart = float(result.group("start"))
             movLink = result.group("link")
+            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
             pathResult = RegPath.search(movLink)
             if pathResult:
                 movType = "video/" + GetMimeType(pathResult.group("ext"))
@@ -829,7 +848,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         
             #broadcast movie url 
             f = {"link": movLink, "start": movStart, "duration": movDuration, "type": movType, "uri": useURI}
-            Parent.BroadcastWsEvent("EVENT_MOV", json.dumps(f, encoding='utf-8-sig'))
+            Parent.BroadcastWsEvent("EVENT_MOV" + target, json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.Replace(fullMov,"")
             #Parent.SendStreamMessage("Playing for " + str(movDuration) + " seconds") #movLink #parseString.replace(fullGif, "")
@@ -1001,9 +1020,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
     if "$gif" in parseString:
         result = RegGif.search(parseString)
+        #Parent.Log("gif result", parseString )
         if result:
             fullGif = result.group(0)
             GifLink = result.group("link")
+            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
 
             pathResult = RegIsPath.search(GifLink)
             if pathResult:
@@ -1011,7 +1032,7 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
 
             gifDuration = int(float(result.group("duration")) *1000)
             f = {"duration": gifDuration, "link": GifLink}
-            Parent.BroadcastWsEvent("EVENT_GIF", json.dumps(f, encoding='utf-8-sig'))
+            Parent.BroadcastWsEvent("EVENT_GIF" + target , json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.replace(fullGif, "")
         else:
@@ -1025,12 +1046,13 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             textMessage = result.group("message").replace("+", " ")
             textStyle = result.group("style").replace("+", " ")
             textDuration = int(float(result.group("duration")) *1000)
+            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
 
             #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
 
             # broadcast messge
             f = {"duration": textDuration, "message": textMessage, "style": textStyle}
-            Parent.BroadcastWsEvent("EVENT_TEXT", json.dumps(f, encoding='utf-8-sig'))
+            Parent.BroadcastWsEvent("EVENT_TEXT" + target, json.dumps(f, encoding='utf-8-sig'))
 
             parseString = parseString.replace(fullText, "")
         else:
@@ -1326,19 +1348,24 @@ GiphyApi = "http://api.giphy.com/v1/{0}/search?api_key={1}&limit=1&offset={2}&la
 
 #Regex
 RegGif = re.compile(r"(?:\$gif\([\ ]*(?P<link>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
 RegGiphy = re.compile(r"(?:\$giphy\([\ ]*(?P<search>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
 RegMovie = re.compile(r"(?:\$mov..\([\ ]*(?P<link>[^\"\'\,]+)"
                     r"[\ ]*\,[\ ]*(?P<start>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
 RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<countdown>\d+)"
                     r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<starttime>\d*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<starttime>\d*)"
+                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
 RegText = re.compile(r"(?:\$text\([\ ]*(?P<message>[^\"\']+)"
                     r"[\ ]*\,[\ ]*(?P<style>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)[\ ]*\))", re.U)
+                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
+                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
 RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)

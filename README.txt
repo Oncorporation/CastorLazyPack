@@ -10,7 +10,21 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
-1.4.91 by Charles Fettinger 2019-02-28
+1.5 By Charles Fettinger 2019-03-05
+	- Expand multiple commands to include infinite browser source targets
+		- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $movie(<LINK>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE ID>,<TARGET BROWSER SOURCE>)
+        - $text(<MESSAGE>,<STYLE>,<DURATION>,<TARGET BROWSER SOURCE>) 
+        - $gif(<LINK>,<DURATION>,<TARGET BROWSER SOURCE>)	
+        - $giphy(<SEARCH TERM>,<DURATION>,<TARGET BROWSER SOURCE>)
+        - $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+    - Change Title index.html/index_vue.html: <title>CLP Overlay</title> This title is now used to identify Overlay browser.
+        - The first word of page title <TARGET BROWSER SOURCE> is used, except "CLP" which is the default and made blank for backward compatibility.
+        - This value is always converted to lowercase
+	- Convert <START TIME> to allow partial seconds i.e. 10.5 seconds
+
+1.4.9.1 by Charles Fettinger 2019-02-28
     - Add shine,spin3d $text effect
     - Convert <DURATION> to allow partial seconds i.e. 10.5 seconds
 
@@ -193,12 +207,12 @@ $sessionfollows - Show amount of follows for current session
 $lastfollow     - Returns name of last follower
 $torand         - Returns target and random user if no target is present
 $sound(FILE.FORMAT)     - Plays the sound, file must be name.fileformat and be placed in the sounds folder. Example: $sound(Test.mp3)
-$text(<MESSAGE>,<STYLE>,<DURATION>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,sparks,spin,spin3d,shine included)
-$gif(<LINK>,<DURATION>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif)
-$giphy(<SEARCH TERM>,<DURATION>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
-$movie(<LINK>,<START TIME>,<DURATION>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
-$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
-$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>) - Shows a Twitch Clip linked in the index.html starting at <START TIME> for <DURATION> seconds.
+$text(<MESSAGE>,<STYLE>,<DURATION>,<TARGET BROWSER SOURCE>) - displays <MESSAGE> (use + for spaces) in index.html for <DURATION> seconds with <STYLE> effect applied (fire,glitch,blue,matrix,normal,sunny,sparks,spin,spin3d,shine included)
+$gif(<LINK>,<DURATION>,<TARGET BROWSER SOURCE>) - Shows the gif linked in the index.html for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/test.gif). the video folder does not need path info (fire.gif)
+$giphy(<SEARCH TERM>,<DURATION>,<TARGET BROWSER SOURCE>) - find gifs or stickers from Giphy based on <SEARCH TERM> and plays in the index.html for <DURATION>
+$movie(<LINK>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>) -  Shows the movie linked in the index.html starting at <START TIME> for <DURATION> seconds, link can also be the full filepath including fileformat (c:/users/castorr/desktop/movie.mp4)
+$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>) -  Shows a youtube video linked in the index.html starting at <START TIME> for <DURATION> seconds.
+$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>) - Shows a Twitch Clip linked in the index.html starting at <START TIME> for <DURATION> seconds.
 $default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
 
@@ -226,13 +240,20 @@ $sessionfollows         - https://gyazo.com/a2710f2b0acac6317e9c72c06b96f183
 $lastfollow             - https://gyazo.com/01d308e6bf46500f340eb49f524816aa
 $torand                 - https://gyazo.com/ba07e41cecddd874fc62f48b46d31f46
 $sound(FILE.FORMAT)     - https://gyazo.com/cb2924f03ae3533f2b669153ff1fb5ee
-$sync			- https://ibb.co/b9V20L or https://ibb.co/iqJi70 (no video)
-$text(<MESSAGE>,<STYLE>,<DURATION>) - https://ibb.co/H7PfhNH
-$gif(<LINK>,<DURATION>)	- https://gyazo.com/664d446be9cafaea2b50f64c3b54a2e2
-$giphy(<SEARCH TERM>,<DURATION>)	- https://ibb.co/exwLn0	
-$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>)	- https://ibb.co/cJAPEf
-$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>)   - https://ibb.co/fHq4G1G
-$movie(<LINK>,<START TIME>,<DURATION>)	- https://ibb.co/cHP6S0
+$sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE ID>,<TARGET BROWSER SOURCE>)			
+						- https://ibb.co/XtMWCyF or https://ibb.co/iqJi70 (no video)
+$text(<MESSAGE>,<STYLE>,<DURATION>,<TARGET BROWSER SOURCE>) 
+						- https://ibb.co/zPkqwd4
+$gif(<LINK>,<DURATION>,<TARGET BROWSER SOURCE>)	
+						- https://ibb.co/FnJjz5D
+$giphy(<SEARCH TERM>,<DURATION>,<TARGET BROWSER SOURCE>)	
+						- https://ibb.co/2gxDgpb	
+$movyt(<YOUTUBE ID>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)	
+						- https://ibb.co/1ZMSHWv
+$movtw(<TWITCH SLUG>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)   
+						- https://ibb.co/D8Q77Bk
+$movie(<LINK>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)	
+						- https://ibb.co/xgpfQmp
 
 #############################
 #   Modified  Parameters    #

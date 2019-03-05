@@ -42,13 +42,7 @@ Vue.component('client-component', {
                     }
                     this.videoclass = "video";
                     this.fade = true;                    
-                    //var video = this.$refs.mymov;
 
-                    //video.on("ready", function () {
-                    //    this.on('loadedmetadata', function () {
-                    //        video.currentTime(MySet.start);
-                    //    });
-                    //});  
                     this.muted = false;
                     await this.timeout(MySet.duration);
                     this.muted = true;
@@ -117,14 +111,20 @@ Vue.component('client-component', {
         //---------------------------------
         //  Open Event
         //---------------------------------
+        var targetSuffix = "";
+
         this.socket.onopen = function () {
+            // get current target information
+            var targetRegEx = new RegExp(/(?<target>[^\"\'\,\s\|\'\`]+)/);
+            var matches = targetRegEx.exec(document.title);
+            targetSuffix = (matches.groups.target === "CLP") ? "" : "_" + matches.groups.target.toLowerCase();
             // Format your Authentication Information
             var auth = {
                 author: "Castorr91",
                 website: "https://www.twitch.tv/castorr91",
                 api_key: API_Key,
                 events: [
-                    "EVENT_GIF", "EVENT_MOV", "EVENT_YUT", "EVENT_TEXT"
+                    "EVENT_GIF" + targetSuffix, "EVENT_MOV" + targetSuffix, "EVENT_YUT" + targetSuffix, "EVENT_TEXT" + targetSuffix
                 ]
             };
             //  Send your Data to the server
@@ -146,26 +146,27 @@ Vue.component('client-component', {
             if (jsonObject.event !== "EVENT_CONNECTED") {
                 //parse jason data
                 var MySet = JSON.parse(jsonObject.data);
-                MySet.element = '';                
-            }
-            switch (jsonObject.event) {
-                case "EVENT_GIF":
-                    MySet.element = 'img';
-                    this.queue.push(MySet);
-                    break;
-                case "EVENT_MOV":
-                    MySet.element = 'video';
-                    this.queue.push(MySet);
-                    break;
-                case "EVENT_YUT":
-                    MySet.element = 'framesrc';
-                    this.queue.push(MySet);
-                    break;
-                case "EVENT_TEXT":
-                    MySet.element = 'text';
-                    this.queue.push(MySet);
-                    break;
-                default:
+                MySet.element = '';
+
+                switch (jsonObject.event) {
+                    case "EVENT_GIF" + targetSuffix:
+                        MySet.element = 'img';
+                        this.queue.push(MySet);
+                        break;
+                    case "EVENT_MOV" + targetSuffix:
+                        MySet.element = 'video';
+                        this.queue.push(MySet);
+                        break;
+                    case "EVENT_YUT" + targetSuffix:
+                        MySet.element = 'framesrc';
+                        this.queue.push(MySet);
+                        break;
+                    case "EVENT_TEXT" + targetSuffix:
+                        MySet.element = 'text';
+                        this.queue.push(MySet);
+                        break;
+                    default:
+                }
             }
 
         }.bind(this);
