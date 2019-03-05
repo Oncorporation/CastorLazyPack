@@ -2,7 +2,7 @@
 
 **Latest Version:** 1.5
 
-**Download:** [CastorLazyPack1.5.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorLazyPackv1.5/CastorLazyPack1.5.zip)
+**Download:** [CastorrsLazyPack1.5.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.5/CastorrsLazyPack1.5.zip)
 
 **Updated:** Charles Fettinger 2019-03-05
 
