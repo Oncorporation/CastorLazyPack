@@ -13,7 +13,7 @@ Extra $parameters and !sr info when missing id/url
 ## Update History
     1.5 By Charles Fettinger 2019-03-05
 	- Expand multiple commands to include infinite browser source targets
-		- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
+	- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
         - $movie(<LINK>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
         - $sync(<MESSAGE>,<COUNTDOWN>,<YOUTUBE ID>,<TARGET BROWSER SOURCE>)
         - $text(<MESSAGE>,<STYLE>,<DURATION>,<TARGET BROWSER SOURCE>) 
