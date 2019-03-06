@@ -10,6 +10,17 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.5.0.1 By Charles Fettinger 2019-03-06
+    - Add GetRandomItemFromList function
+    - All <TARGET BROWSER SOURCE> instances now accepts a space delimited list of browser sources, which 
+        will play in a random browser source which includes the default CLP (blank). 
+        If a single value is entered, it will be returned.
+        Use 'clp' to include the default browser source
+        - example: $giphy(streamer wins!,10.5,top left bottom) plays in a random selection of default, top, left or bottom (4 choices) browser source
+        - example: $giphy(streamer wins!,10.5,left clp) plays in a random selection of left or default browser source
+        - example: $giphy(streamer wins!,10.5,left) always plays in left browser source
+        - example: $giphy(streamer wins!,10.5,) always plays in the default browser source
+
 1.5 By Charles Fettinger 2019-03-05
 	- Expand multiple commands to include infinite browser source targets
 		- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)

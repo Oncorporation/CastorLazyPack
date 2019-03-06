@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.5"
+Version = "1.5.0.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,17 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.5.0.1 By Charles Fettinger 2019-03-06
+    - Add GetRandomItemFromList function
+    - All <TARGET BROWSER SOURCE> instances now accepts a space delimited list of browser sources, which 
+        will play in a random browser source which includes the default CLP (blank). 
+        If a single value is entered, it will be returned.
+        Use 'clp' to include the default browser source
+        - example: $giphy(streamer wins!,10.5,top left bottom) plays in a random selection of default, top, left or bottom (4 choices) browser source
+        - example: $giphy(streamer wins!,10.5,left clp) plays in a random selection of left or default browser source
+        - example: $giphy(streamer wins!,10.5,left) always plays in left browser source
+        - example: $giphy(streamer wins!,10.5,) always plays in the default browser source
+
 1.5 By Charles Fettinger 2019-03-05
 	- Expand multiple commands to include infinite browser source targets
 		- $movtw(<Twitch Clip Slug>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>)
@@ -319,6 +330,21 @@ def GetTextFileContents(textfile):
         with codecs.open(textfile, encoding="utf-8-sig", mode="r") as f:
             return f.readlines()
     except FileNotFoundError:
+        return ""
+
+def GetRandomItemFromList(mylist):  
+    """Returns a random item from the list. 'clp' is removed for browser source compatibility 
+        GetRandomItemFromList('left clp right')
+    """
+    random.seed()
+    try:
+        result = mylist.split()
+        if len(result) == 1:
+            return mylist.strip()
+        result.remove('clp')
+        rand = random.randint(0,len(result)+1)
+        return result[rand]
+    except:
         return ""
 
 def GetMimeType(extension):
@@ -691,7 +717,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             count = int(result.group("countdown"))
             message = result.group("message")
             ytid = result.group("ytid")
-            target = "_" + result.group("target").toLower() if len(result.group("target")) > 0 else "" ;
+            target =  GetRandomItemFromList(result.group("target").lower())
+            target = "_" + target if len(target) > 0 else "";
             starttime = result.group("starttime")
             if (len(ytid) > 1):
                 f = {"link": ytid, "start": starttime, "duration": 17000}
@@ -724,11 +751,12 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 fullGif = result.group(0)
                 gifDuration = int(float(result.group("duration")) *1000)
                 GifSearch = result.group("search")
-                target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+                target =  GetRandomItemFromList(result.group("target").lower())
+                target = "_" + target if len(target) > 0 else "";
                 errorString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
                 """check search term for results"""
                 totalcount = GetApiGiphyTotalCount(apicheck, GifSearch)
-                #Parent.Log("giphy tcount",totalcount)
+                #Parent.Log("giphy target",target)
                 if (totalcount > 0):
                     """limit results to top 20, otherwise offset is inaccurate to search term"""
                     if (totalcount > 20):
@@ -762,7 +790,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movDuration = int(float(result.group("duration")) *1000)
             movStart = result.group("start")
             movLink = result.group("link")
-            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+            target =  GetRandomItemFromList(result.group("target").lower())
+            target = "_" + target if len(target) > 0 else "";
 
             #Parent.Log("movyt Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
         
@@ -793,7 +822,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 movDuration = int(float(result.group("duration")) *1000)
                 movStart = result.group("start")
                 movLink = result.group("link")
-                target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+                target =  GetRandomItemFromList(result.group("target").lower())
+                target = "_" + target if len(target) > 0 else "";
                 header = {"Client-ID": MySet.twitchapikey}
                 totalcount = GetApiDataCount(ClipsApi.format(movLink), header)
                 movType = "video/mp4"
@@ -833,7 +863,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movDuration = int(float(result.group("duration")) *1000)
             movStart = float(result.group("start"))
             movLink = result.group("link")
-            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+            target =  GetRandomItemFromList(result.group("target").lower())
+            target = "_" + target if len(target) > 0 else "";
             pathResult = RegPath.search(movLink)
             if pathResult:
                 movType = "video/" + GetMimeType(pathResult.group("ext"))
@@ -1024,7 +1055,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:
             fullGif = result.group(0)
             GifLink = result.group("link")
-            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+            target =  GetRandomItemFromList(result.group("target").lower())
+            target = "_" + target if len(target) > 0 else "";
 
             pathResult = RegIsPath.search(GifLink)
             if pathResult:
@@ -1046,7 +1078,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             textMessage = result.group("message").replace("+", " ")
             textStyle = result.group("style").replace("+", " ")
             textDuration = int(float(result.group("duration")) *1000)
-            target = "_" + result.group("target").lower() if len(result.group("target")) > 0 else "" ;
+            target =  GetRandomItemFromList(result.group("target").lower())
+            target = "_" + target if len(target) > 0 else "";
 
             #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
 
