@@ -10,6 +10,10 @@ Contribution by: Surn @ https://www.twitch.tv/Surn
 #############################
 #         Versions          #
 #############################
+1.5.1 By Charles Fettinger 2019-03-06
+    - $sync regular expression issue fixed
+    - fix regular expressions to allow <TARGET BROWSER SOURCE> to be optional
+
 1.5.0.1 By Charles Fettinger 2019-03-06
     - Add GetRandomItemFromList function
     - All <TARGET BROWSER SOURCE> instances now accepts a space delimited list of browser sources, which 
@@ -226,6 +230,16 @@ $movyt(<YOUTUBE ID>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>) -  Shows a 
 $movtw(<TWITCH SLUG>,<START TIME>,<DURATION>,<TARGET BROWSER SOURCE>) - Shows a Twitch Clip linked in the index.html starting at <START TIME> for <DURATION> seconds.
 $default(MESSAGE)	- Shows the MESSAGE if no argument was put after the command, if there is an argument this parameter doesn't show at all
 
+ ### Note:
+    <TARGET BROWSER SOURCE> is an OPTIONAL, space delimited list of browser sources. Sources are chosen at random from the list and the default is "clp" or a blank space. 
+        If a single value is entered as <TARGET BROWSER SOURCE>, it will be returned.
+        Use 'clp' to include the default browser source or leave it blank or do not put in the comma that delimits the parameter.
+        - example: $giphy(streamer wins!,10.5,top left bottom) plays in a randomly selected browser source consisting of default (clp), top, left or bottom (4 list items)
+        - example: $giphy(streamer wins!,10.5,left clp) plays in a random selection of left or default (clp) browser source
+        - example: $giphy(streamer wins!,10.5,left) always plays in left browser source
+        - example: $giphy(streamer wins!,10.5,) always plays in the default (clp) browser source 
+        - example: $giphy(streamer wins!,10.5) always plays in the default (clp) browser source 
+        Internally, the default (clp) browser source is represented by a empty string or blank
 
 #############################
 #     Example Commands      #

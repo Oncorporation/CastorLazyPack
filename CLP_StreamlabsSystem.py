@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.5.0.1"
+Version = "1.5.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,6 +37,10 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.5.1 By Charles Fettinger 2019-03-06
+    - $sync regular expression issue fixed
+    - fix regular expressions to allow <TARGET BROWSER SOURCE> to be optional
+
 1.5.0.1 By Charles Fettinger 2019-03-06
     - Add GetRandomItemFromList function
     - All <TARGET BROWSER SOURCE> instances now accepts a space delimited list of browser sources, which 
@@ -717,7 +721,8 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             count = int(result.group("countdown"))
             message = result.group("message")
             ytid = result.group("ytid")
-            target =  GetRandomItemFromList(result.group("target").lower())
+            target = result.group("target") if result.group("target") else ""
+            target =  GetRandomItemFromList(target.lower())
             target = "_" + target if len(target) > 0 else "";
             starttime = result.group("starttime")
             if (len(ytid) > 1):
@@ -746,13 +751,14 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             apicheck = GiphyApi.format(MySet.giphytype, MySet.giphyapikey, 0, MySet.language, MySet.giphyrating)
             result = RegGiphy.search(parseString)
             errorString = "[ERROR: Seems like you have a space in the () or forgot to set a time]"
-            Parent.Log("giphy result", parseString)
+            #Parent.Log("giphy result", parseString)
             if result:              
                 fullGif = result.group(0)
                 gifDuration = int(float(result.group("duration")) *1000)
                 GifSearch = result.group("search")
-                target =  GetRandomItemFromList(result.group("target").lower())
-                target = "_" + target if len(target) > 0 else "";
+                target = result.group("target") if result.group("target") else ""
+                target =  GetRandomItemFromList(target.lower())
+                target = "_" + target if len(target) > 0 else ""
                 errorString = "[ERROR:No Results found for " + GifSearch + " in " + MySet.giphytype + "]"
                 """check search term for results"""
                 totalcount = GetApiGiphyTotalCount(apicheck, GifSearch)
@@ -790,10 +796,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movDuration = int(float(result.group("duration")) *1000)
             movStart = result.group("start")
             movLink = result.group("link")
-            target =  GetRandomItemFromList(result.group("target").lower())
-            target = "_" + target if len(target) > 0 else "";
+            target = result.group("target") if result.group("target") else ""
+            target =  GetRandomItemFromList(target.lower())
+            target = "_" + target if len(target) > 0 else ""
 
-            #Parent.Log("movyt Params", movLink + " start: " + str(movStart) + " end:" + str(movDuration + movStart))
+            #Parent.Log("movyt Params", movLink + " start: " + str(movStart) + " duration:" + str(movDuration))
         
             """broadcast movie url"""
             f = {"link": movLink, "start": movStart, "duration": movDuration}
@@ -822,8 +829,9 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
                 movDuration = int(float(result.group("duration")) *1000)
                 movStart = result.group("start")
                 movLink = result.group("link")
-                target =  GetRandomItemFromList(result.group("target").lower())
-                target = "_" + target if len(target) > 0 else "";
+                target = result.group("target") if result.group("target") else ""
+                target =  GetRandomItemFromList(target.lower())
+                target = "_" + target if len(target) > 0 else ""
                 header = {"Client-ID": MySet.twitchapikey}
                 totalcount = GetApiDataCount(ClipsApi.format(movLink), header)
                 movType = "video/mp4"
@@ -863,8 +871,9 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             movDuration = int(float(result.group("duration")) *1000)
             movStart = float(result.group("start"))
             movLink = result.group("link")
-            target =  GetRandomItemFromList(result.group("target").lower())
-            target = "_" + target if len(target) > 0 else "";
+            target = result.group("target") if result.group("target") else ""
+            target =  GetRandomItemFromList(target.lower())
+            target = "_" + target if len(target) > 0 else ""
             pathResult = RegPath.search(movLink)
             if pathResult:
                 movType = "video/" + GetMimeType(pathResult.group("ext"))
@@ -1055,9 +1064,10 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
         if result:
             fullGif = result.group(0)
             GifLink = result.group("link")
-            target =  GetRandomItemFromList(result.group("target").lower())
-            target = "_" + target if len(target) > 0 else "";
-
+            target = result.group("target") if result.group("target") else ""
+            target =  GetRandomItemFromList(target.lower())
+            target = "_" + target if len(target) > 0 else ""
+            Parent.Log("gif target", target )
             pathResult = RegIsPath.search(GifLink)
             if pathResult:
                 GifLink = GetDataURI(GifLink,"image")
@@ -1078,10 +1088,11 @@ def NewParameters(parseString, userid, username, targetid, targetname, message):
             textMessage = result.group("message").replace("+", " ")
             textStyle = result.group("style").replace("+", " ")
             textDuration = int(float(result.group("duration")) *1000)
-            target =  GetRandomItemFromList(result.group("target").lower())
-            target = "_" + target if len(target) > 0 else "";
+            target = result.group("target") if result.group("target") else ""
+            target =  GetRandomItemFromList(target.lower())
+            target = "_" + target if len(target) > 0 else ""
 
-            #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration))
+            #Parent.Log("text Params", textMessage + " style: " + textStyle + " duration:" + str(textDuration) + " target:" + target)
 
             # broadcast messge
             f = {"duration": textDuration, "message": textMessage, "style": textStyle}
@@ -1380,25 +1391,25 @@ GiphyApi = "http://api.giphy.com/v1/{0}/search?api_key={1}&limit=1&offset={2}&la
 
 
 #Regex
-RegGif = re.compile(r"(?:\$gif\([\ ]*(?P<link>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
-RegGiphy = re.compile(r"(?:\$giphy\([\ ]*(?P<search>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
-RegMovie = re.compile(r"(?:\$mov..\([\ ]*(?P<link>[^\"\'\,]+)"
-                    r"[\ ]*\,[\ ]*(?P<start>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
-RegSync = re.compile(r"(?:\$sync\([\ ]*(?P<message>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<countdown>\d+)"
-                    r"[\ ]*\,[\ ]*(?P<ytid>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<starttime>\d*)"
-                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
-RegText = re.compile(r"(?:\$text\([\ ]*(?P<message>[^\"\']+)"
-                    r"[\ ]*\,[\ ]*(?P<style>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<duration>[^\"\']*)"
-                    r"[\ ]*\,[\ ]*(?P<target>[^\"\']*)[\ ]*\))", re.U)
+RegGif = re.compile(r"(?:\$gif\([\ \"\']*(?P<link>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<duration>[^,\"\']*)"
+                    r"[\ \"\']*(,[\ \"\']*(?P<target>[^,\"\']*)[\ \"\']*)?\))", re.U)
+RegGiphy = re.compile(r"(?:\$giphy\([\ \"\']*(?P<search>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<duration>[^,\"\']*)"
+                    r"[\ \"\']*(,[\ \"\']*(?P<target>[^,\"\']*)[\ \"\']*)?\))", re.U)
+RegMovie = re.compile(r"(?:\$mov..\([\ \"\']*(?P<link>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<start>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<duration>[^,\"\']*)"
+                    r"[\ \"\']*(,[\ \"\']*(?P<target>[^,\"\']*)[\ \"\']*)?\))", re.U)
+RegSync = re.compile(r"(?:\$sync\([\ \"\']*(?P<message>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<countdown>\d+)"
+                    r"[\ \"\']*,[\ \"\']*(?P<ytid>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<starttime>[^,\"\']*)"
+                    r"[\ \"\']*(,[\ \"\']*(?P<target>[^,\"\']*)[\ \"\']*)?\))", re.U)
+RegText = re.compile(r"(?:\$text\([\ \"\']*(?P<message>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<style>[^,\"\']*)"
+                    r"[\ \"\']*,[\ \"\']*(?P<duration>[^,\"\']*)"
+                    r"[\ \"\']*(,[\ \"\']*(?P<target>[^,\"\']*)[\ \"\']*)?\))", re.U)
 RegSound = re.compile(r"(?:\$sound\([\ ]*(?P<file>[^\"\']+)[\ ]*\))", re.U)
 RegDefault = re.compile(r"\$default\((?P<string>.*?)\)", re.U)
 RegQuery = re.compile(r"(?:\$\(querystring[\ ]*(?P<string>[^\"\']+)[\ ]*\))", re.U)
