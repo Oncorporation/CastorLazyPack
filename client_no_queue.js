@@ -161,9 +161,8 @@ if( window.WebSocket ){
                 else {
                     removeClass(text, 'normal');
                 }
-            }, MySet.duration);
-
-            text.innerHTML = "";
+                text.innerHTML = "";
+            }, MySet.duration);            
         }
     }
     socket.onclose = function () 
