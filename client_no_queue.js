@@ -2,7 +2,7 @@ if( window.WebSocket ){
     //---------------------------------
     //  Variables
     //---------------------------------
-    var serviceUrl = "ws://127.0.0.1:3337/streamlabs"
+    var serviceUrl = "ws://127.0.0.1:3337/streamlabs";
     var socket = new WebSocket(API_Socket);
     //---------------------------------
     //  Events
@@ -42,7 +42,7 @@ if( window.WebSocket ){
         {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
+            //console.log("Parsed" + jsonObject)
             //show gif
             var image = document.getElementById("myimg");
             var badge = document.getElementById("mybadge");
@@ -70,12 +70,12 @@ if( window.WebSocket ){
         {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
+            //console.log("Parsed" + jsonObject)
             //show movie
             var video = document.getElementById('mymov');
             var source = document.createElement('source');
 
-/*            if (!MySet.link.includes("http"))
+            /* if (!MySet.link.includes("http"))
             {
                 var URL = window.URL || window.webkitURL
                 MySet.link = URL.createObjectURL(MySet.Link)
@@ -117,15 +117,15 @@ if( window.WebSocket ){
         {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
+            //console.log("Parsed" + jsonObject)
             //show movie
             var youtube = document.getElementById('myyut');
             youtube.setAttribute('src',  "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start +"&end=" + (MySet.start + (MySet.duration / 1000).toString()));
-            removeClass(youtube,'hidden')
+            removeClass(youtube, 'hidden');
             
             setTimeout(function() {                   
                 youtube.removeAttribute('src'); // empty source
-                addClass(youtube,'hidden')
+                addClass(youtube, 'hidden');
              }, MySet.duration);
 
         }
@@ -134,11 +134,12 @@ if( window.WebSocket ){
         {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject)
+            console.log("Parsed" + jsonObject);
 
             var text = document.getElementById('mytext'); 
             var styles = MySet.style.split(" ");
             text.innerHTML = MySet.message;
+            text.className = 'hidden';
             removeClass(text, 'hidden');
             if (MySet.style) {
                 for (var style in styles)
@@ -169,7 +170,7 @@ if( window.WebSocket ){
     {
         //  Connection has been closed by you or the server
         console.log("Connection Closed!");
-    }  
+    };  
 }
 
 function hasClass(el, className) {
