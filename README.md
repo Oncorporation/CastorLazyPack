@@ -14,7 +14,7 @@ Extra $parameters and !sr info when missing id/url
     1.5.2 By Charles Fettinger 2019-03-10
     - Add and update Index_no_queue.html and client_no_queue.js
         These files allow the usecase when browser source is active until updated by another command.
-        They were pulled from a pre-queue version and updated. Set a very long <DURATION>, <Target Browser Source> is available.
+        They were pulled from a pre-queue version and updated. Set a very long <DURATION>, <TARGET BROWSER SOURCE> is available.
 
     1.5.1 By Charles Fettinger 2019-03-08
     - $sync regular expression issue fixed
