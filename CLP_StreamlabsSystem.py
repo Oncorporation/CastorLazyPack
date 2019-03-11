@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.5.1"
+Version = "1.5.2"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Surn @ https://www.twitch.tv/surn"
@@ -37,7 +37,12 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
-1.5.1 By Charles Fettinger 2019-03-06
+1.5.2 By Charles Fettinger 2019-03-10
+    - Add and update Index_no_queue.html and client_no_queue.js
+        These files allow the usecase when browser source is active until updated by another command.
+        They were pulled from a pre-queue version and updated. Set a very long <DURATION>, <Target Browser Source> is available.
+
+1.5.1 By Charles Fettinger 2019-03-08
     - $sync regular expression issue fixed
     - fix regular expressions to allow <TARGET BROWSER SOURCE> to be optional
 
