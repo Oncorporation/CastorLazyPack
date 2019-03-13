@@ -38,7 +38,7 @@ Website = "https://www.twitch.tv/castorr91"
 #---------------------------------------
 """
 1.5.3 By Charles Fettinger 2019-03-12
-    - Reorganize folder structure to place JS/HTML/CSS in subfolder 'overlay'
+    - Reorganize folder structure to place JS/HTML/CSS in subfolder 'overlay' and add README.txt to folder
     - updated client_no_queue.js to optimize and be closer in line with newer .js file design.
 
 1.5.2 By Charles Fettinger 2019-03-10
