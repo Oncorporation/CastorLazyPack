@@ -28,144 +28,124 @@ if( window.WebSocket ){
         socket.send(JSON.stringify(auth));
     };
 
-    socket.onerror = function(error)
-    {
+    socket.onerror = function (error) {
         //Something went terribly wrong... Respond?!
         console.log("Error: " + error);
-    }
+    };
 
-    socket.onmessage = function (message) 
-    {
+    socket.onmessage = function (message) {
         var jsonObject = JSON.parse(message.data);
 
-        if(jsonObject.event == "EVENT_GIF" + targetSuffix)
-        {
+        if (jsonObject.event !== "EVENT_CONNECTED") {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
-            //console.log("Parsed" + jsonObject)
-            //show gif
-            var image = document.getElementById("myimg");
-            var badge = document.getElementById("mybadge");
-            var isgiphy = (MySet.link.indexOf('giphy') > 0 );
-            
-            image.setAttribute('src',  MySet.link);
-            //console.log("got image " + MySet.link);
-            removeClass(image,'hidden');            
-            if(isgiphy)
-            {
-                removeClass(badge,'hidden');
-            }
+            MySet.element = '';
+            console.log("Parsed:" + jsonObject);
 
-            setTimeout(function() {
-                image.removeAttribute('src');
-                addClass(image,'hidden');
-                if(isgiphy)
-                {
-                    addClass(badge,'hidden');
+            if (jsonObject.event === "EVENT_GIF" + targetSuffix) {
+                //show gif
+                var image = document.getElementById("myimg");
+                var badge = document.getElementById("mybadge");
+                var isgiphy = (MySet.link.indexOf('giphy') > 0);
+
+                image.setAttribute('src', MySet.link);
+                //console.log("got image " + MySet.link);
+                removeClass(image, 'hidden');
+                if (isgiphy) {
+                    removeClass(badge, 'hidden');
                 }
-             }, MySet.duration);
-        }
 
-        if(jsonObject.event == "EVENT_MOV" + targetSuffix)
-        {
-            //parse jason data
-            var MySet = JSON.parse(jsonObject.data);
-            //console.log("Parsed" + jsonObject)
-            //show movie
-            var video = document.getElementById('mymov');
-            var source = document.createElement('source');
-
-            /* if (!MySet.link.includes("http"))
-            {
-                var URL = window.URL || window.webkitURL
-                MySet.link = URL.createObjectURL(MySet.Link)
-            }*/
-            if(MySet.uri)
-            {
-                source.setAttribute('src',  MySet.link );
+                setTimeout(function () {
+                    image.removeAttribute('src');
+                    addClass(image, 'hidden');
+                    if (isgiphy) {
+                        addClass(badge, 'hidden');
+                    }
+                }, MySet.duration);
             }
-            else
-            {
-                source.setAttribute('src',  MySet.link + "#t=" + MySet.start);
-            }
-            source.setAttribute('type',  MySet.type);
-            console.log("got movie " + MySet.type + "#t=" + MySet.start)
 
-            video.appendChild(source);
-            video.addEventListener('loadedmetadata', function() {
-              this.currentTime = MySet.start;
-            }, false);
-            removeClass(video,'hidden');
-            video.muted = false;
+            if (jsonObject.event === "EVENT_MOV" + targetSuffix) {
 
-            video.autoplay = true;
-            //video.get(0).play();
-            video.play();
+                //show movie
+                var video = document.getElementById('mymov');
+                var source = document.createElement('source');
 
-            setTimeout(function() {
-                video.pause();    
-                source.removeAttribute('src'); // empty source
-                video.load();
+                if (MySet.uri) {
+                    source.setAttribute('src', MySet.link);
+                }
+                else {
+                    source.setAttribute('src', MySet.link + "#t=" + MySet.start);
+                }
+                source.setAttribute('type', MySet.type);
+                //console.log("got movie " + MySet.type + "#t=" + MySet.start);
+
+                video.appendChild(source);
+                video.addEventListener('loadedmetadata', function () {
+                    this.currentTime = MySet.start;
+                }, false);
+                removeClass(video, 'hidden');
+                video.muted = false;
+
+                video.autoplay = true;
+                //video.get(0).play();
                 video.play();
-                video.removeChild(source);
-                addClass(video,'hidden');
-                video.muted = true;
-            }, MySet.duration);
-        }
 
-        if(jsonObject.event == "EVENT_YUT" + targetSuffix)
-        {
-            //parse jason data
-            var MySet = JSON.parse(jsonObject.data);
-            //console.log("Parsed" + jsonObject)
-            //show movie
-            var youtube = document.getElementById('myyut');
-            youtube.setAttribute('src',  "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start +"&end=" + (MySet.start + (MySet.duration / 1000).toString()));
-            removeClass(youtube, 'hidden');
-            
-            setTimeout(function() {                   
-                youtube.removeAttribute('src'); // empty source
-                addClass(youtube, 'hidden');
-             }, MySet.duration);
-
-        }
-
-        if(jsonObject.event == "EVENT_TEXT" + targetSuffix)
-        {
-            //parse jason data
-            var MySet = JSON.parse(jsonObject.data);
-            console.log("Parsed" + jsonObject);
-
-            var text = document.getElementById('mytext'); 
-            var styles = MySet.style.split(" ");
-            text.innerHTML = MySet.message;
-            text.className = 'hidden';
-            removeClass(text, 'hidden');
-            if (MySet.style) {
-                for (var style in styles)
-                {
-                    addClass(text, styles[style]);
-                }
-            }
-            else {
-                addClass(text, 'normal');
+                setTimeout(function () {
+                    video.pause();
+                    source.removeAttribute('src'); // empty source
+                    video.load();
+                    video.play();
+                    video.removeChild(source);
+                    addClass(video, 'hidden');
+                    video.muted = true;
+                }, MySet.duration);
             }
 
-            setTimeout(function() {
-                addClass(text, 'hidden');
+            if (jsonObject.event === "EVENT_YUT" + targetSuffix) {
+                //show movie
+                var youtube = document.getElementById('myyut');
+                youtube.setAttribute('src', "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start + "&end=" + (MySet.start + (MySet.duration / 1000).toString()));
+                removeClass(youtube, 'hidden');
+
+                setTimeout(function () {
+                    youtube.removeAttribute('src'); // empty source
+                    addClass(youtube, 'hidden');
+                }, MySet.duration);
+
+            }
+
+            if (jsonObject.event === "EVENT_TEXT" + targetSuffix) {
+
+                var text = document.getElementById('mytext');
+                var styles = MySet.style.split(" ");
+                text.innerHTML = MySet.message;
+                text.className = 'hidden';
+                removeClass(text, 'hidden');
                 if (MySet.style) {
-                    for (var style in styles)
-                    {
-                        removeClass(text, styles[style]);
+                    for (var style in styles) {
+                        addClass(text, styles[style]);
                     }
                 }
                 else {
-                    removeClass(text, 'normal');
+                    addClass(text, 'normal');
                 }
-                text.innerHTML = "";
-            }, MySet.duration);            
+
+                setTimeout(function () {
+                    addClass(text, 'hidden');
+                    if (MySet.style) {
+                        for (var style in styles) {
+                            removeClass(text, styles[style]);
+                        }
+                    }
+                    else {
+                        removeClass(text, 'normal');
+                    }
+                    text.innerHTML = "";
+                }, MySet.duration);
+            }
         }
-    }
+    };
+
     socket.onclose = function () 
     {
         //  Connection has been closed by you or the server

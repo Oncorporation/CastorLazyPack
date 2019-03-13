@@ -2,15 +2,19 @@
 
 **Latest Version:** 1.5.2
 
-**Download:** [CastorrsLazyPack1.5.2.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.5.2/CastorrsLazyPack1.5.2.zip)
+**Download:** [CastorrsLazyPack1.5.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.5.3/CastorrsLazyPack1.5.3.zip)
 
-**Updated:** Charles Fettinger 2019-03-10
+**Updated:** Charles Fettinger 2019-03-12
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+    1.5.3 By Charles Fettinger 2019-03-12
+    - Reorganize folder structure to place JS/HTML/CSS in subfolder 'overlay'
+    - updated client_no_queue.js to optimize and be closer in line with newer .js file design.
+    
     1.5.2 By Charles Fettinger 2019-03-10
     - Add and update Index_no_queue.html and client_no_queue.js
         These files allow the usecase when browser source is active until updated by another command.
