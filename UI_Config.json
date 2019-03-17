@@ -88,28 +88,28 @@
   },
   "giphyimageurl": {
     "type": "textbox",
-    "value": "",
+    "value": "https://i.giphy.com/media/{0}/200w_d.gif",
     "label": "Giphy Image Url",
     "tooltip": "Base Image Url for Giphy Images",
     "group": "Giphy"
   },
     "giphyfailid": {
     "type": "textbox",
-    "value": "",
+    "value": "u2TrRPK8J6Bwc",
     "label": "Giphy ID for complete search failure",
     "tooltip": "find a giphy id that is an epic failure!",
     "group": "Giphy"
   },
     "language": {
     "type": "textbox",
-    "value": "",
+    "value": "en",
     "label": "Language",
     "tooltip": "Languages available: https://developers.giphy.com/docs#language-support,",
     "group": "Giphy"
   },
     "giphyrating": {
     "type": "textbox",
-    "value": "",
+    "value": "PG-13",
     "label": "Giphy Rating",
     "tooltip": "Ratings: Y, G, PG, PG-13, R",
     "group": "Giphy"
@@ -123,7 +123,7 @@
   },
   "giphyapikey": {
     "type": "textbox",
-    "value": "",
+    "value": "KBU47FtdqBMZc7yHAcLuyUFyhWwwKqvi",
     "label": "Giphy Api Key",
     "tooltip": "Api Key used for the Giphy related parameters \r\n Press the button below to locate your Giphy Api Key!",
     "group": "Giphy"
