@@ -28,7 +28,7 @@ from System.Windows.Forms import WebBrowser, Form, DockStyle
 #---------------------------------------
 ScriptName = "CLP "
 Creator = "Castorr91"
-Version = "1.5.3"
+Version = "1.5.3.1"
 Description = "Right click -> insert api key | Extra parameters!"
 
 Contributor = "Charles 'Surn' Fettinger @ https://www.twitch.tv/surn"
@@ -37,6 +37,9 @@ Website = "https://www.twitch.tv/castorr91"
 # Versions
 #---------------------------------------
 """
+1.5.3.1 By Charles Fettinger 2019-03-24
+	- fix Button to overlay/index.html
+
 1.5.3 By Charles Fettinger 2019-03-12
     - Reorganize folder structure to place JS/HTML/CSS in subfolder 'overlay' and add README.txt to folder
     - updated client_no_queue.js to optimize and be closer in line with newer .js file design.
@@ -212,7 +215,7 @@ def OpenFilesFolder():
 
 def ControlC():
     """Copy index.html filepath to clipboard"""
-    indexPath = os.path.dirname(os.path.abspath(__file__)) + "\\index.html"
+    indexPath = os.path.dirname(os.path.abspath(__file__)) + "\\overlay\\index.html"
     command = 'echo ' + indexPath.strip() + '| clip'
     os.system(command)
 

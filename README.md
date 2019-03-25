@@ -11,6 +11,9 @@ This script is a plugin for the Streamlabs Chatbot.
 Extra $parameters and !sr info when missing id/url
 
 ## Update History
+	1.5.3.1 By Charles Fettinger 2019-03-24
+	- fix Button to overlay/index.html
+
     1.5.3 By Charles Fettinger 2019-03-12
     - Reorganize folder structure to place JS/HTML/CSS in subfolder 'overlay' and add README.txt to folder
     - updated client_no_queue.js to optimize and be closer in line with newer .js file design.
