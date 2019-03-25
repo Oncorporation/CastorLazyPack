@@ -1,10 +1,10 @@
 # Castorr's Lazy Pack 
 
-**Latest Version:** 1.5.3
+**Latest Version:** 1.5.3.1
 
-**Download:** [CastorrsLazyPack1.5.3.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.5.3/CastorrsLazyPack1.5.3.zip)
+**Download:** [CastorrsLazyPack1.5.3.1.zip](https://github.com/Oncorporation/CastorLazyPack/releases/download/CastorrsLazyPack1.5.3.1/CastorrsLazyPack1.5.3.1.zip)
 
-**Updated:** Charles Fettinger 2019-03-12
+**Updated:** Charles Fettinger 2019-03-24
 
 ## Synopsis
 This script is a plugin for the Streamlabs Chatbot.
