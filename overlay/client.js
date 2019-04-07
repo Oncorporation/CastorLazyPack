@@ -18,7 +18,6 @@ if (window.WebSocket) {
     //---------------------------------
     //  Variables
     //---------------------------------
-    var serviceUrl = "ws://127.0.0.1:3337/streamlabs";
     var socket = new WebSocket(API_Socket);
 
     var imgqueue = async.queue(async function(MySet, callback) {
