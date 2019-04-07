@@ -5,7 +5,11 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('divYT');
+    player = new YT.Player('divYT', {
+        playerVars: {
+            'controls': 0'
+        }
+    });
     var iframe;
     iframe = player.getIframe();
     addClass(iframe, 'hidden');
