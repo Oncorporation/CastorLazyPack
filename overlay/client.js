@@ -7,11 +7,11 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('divYT');
     var iframe;
-    iframe=player.getIframe();
+    iframe = player.getIframe();
     addClass(iframe, 'hidden');
     addClass(iframe, 'video');
-    iframe.width="";
-    iframe.height="";
+    iframe.width = "";
+    iframe.height = "";
 }
 
 if (window.WebSocket) {
@@ -21,7 +21,7 @@ if (window.WebSocket) {
     var serviceUrl = "ws://127.0.0.1:3337/streamlabs";
     var socket = new WebSocket(API_Socket);
 
-    var imgqueue = async.queue(async function (MySet,callback) {
+    var imgqueue = async.queue(async function(MySet, callback) {
         switch (MySet.element) {
             case 'video':
                 //show movie
@@ -35,15 +35,14 @@ if (window.WebSocket) {
                 }*/
                 if (MySet.uri) {
                     source.setAttribute('src', MySet.link);
-                }
-                else {
+                } else {
                     source.setAttribute('src', MySet.link + "#t=" + MySet.start);
                 }
                 source.setAttribute('type', MySet.type);
                 //console.log("got movie " + MySet.type + "#t=" + MySet.start);
 
                 video.appendChild(source);
-                video.addEventListener('loadedmetadata', function () {
+                video.addEventListener('loadedmetadata', function() {
                     this.currentTime = MySet.start;
                 }, false);
                 removeClass(video, 'hidden');
@@ -67,9 +66,9 @@ if (window.WebSocket) {
             case 'framesrc':
                 //show movie
                 var vidObj = {
-                  'videoId': MySet.link,
-                  'startSeconds': MySet.start,
-                  'endSeconds': (Number(MySet.start) + (MySet.duration / 1000))
+                    'videoId': MySet.link,
+                    'startSeconds': MySet.start,
+                    'endSeconds': (Number(MySet.start) + (MySet.duration / 1000))
                 }
                 player.loadVideoById(vidObj);
                 player.setVolume(settings.volume);
@@ -87,24 +86,20 @@ if (window.WebSocket) {
                 text.textContent = MySet.message;
                 removeClass(text, 'hidden');
                 if (MySet.style) {
-                    for (var style in styles)
-                    {
+                    for (var style in styles) {
                         addClass(text, styles[style]);
                     }
-                }
-                else {
+                } else {
                     addClass(text, 'normal');
                 }
                 await timeout(MySet.duration);
 
                 addClass(text, 'hidden');
                 if (MySet.style) {
-                    for (var style in styles)
-                    {
+                    for (var style in styles) {
                         removeClass(text, styles[style]);
                     }
-                }
-                else {
+                } else {
                     removeClass(text, 'normal');
                 }
                 await timeout(1000);
@@ -144,7 +139,7 @@ if (window.WebSocket) {
     //---------------------------------
     var targetSuffix = "";
 
-    socket.onopen = function () {
+    socket.onopen = function() {
         // get current target information
         var targetRegEx = new RegExp(/(?<target>[^\"\'\,\s\|\'\`]+)/);
         var matches = targetRegEx.exec(document.title);
@@ -162,12 +157,12 @@ if (window.WebSocket) {
         socket.send(JSON.stringify(auth));
     };
 
-    socket.onerror = function (error) {
+    socket.onerror = function(error) {
         //Something went terribly wrong... Respond?!
         console.log("Error: " + error);
     };
 
-    socket.onmessage = function (message) {
+    socket.onmessage = function(message) {
         var jsonObject = JSON.parse(message.data);
 
         if (jsonObject.event !== "EVENT_CONNECTED") {
@@ -198,7 +193,7 @@ if (window.WebSocket) {
         }
     };
 
-    socket.onclose = function () {
+    socket.onclose = function() {
         //  Connection has been closed by you or the server
         console.log("Connection Closed!");
     };
