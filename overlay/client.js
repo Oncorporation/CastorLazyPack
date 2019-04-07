@@ -1,3 +1,19 @@
+var player;
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('divYT');
+    var iframe;
+    iframe=player.getIframe();
+    addClass(iframe, 'hidden');
+    addClass(iframe, 'video');
+    iframe.width="";
+    iframe.height="";
+}
+
 if (window.WebSocket) {
     //---------------------------------
     //  Variables
@@ -32,42 +48,43 @@ if (window.WebSocket) {
                 }, false);
                 removeClass(video, 'hidden');
                 video.muted = false;
-
+                video.volume = settings.volume / 100;
                 video.autoplay = true;
-                //video.get(0).play();
+
+                video.load();
                 video.play();
-
                 await timeout(MySet.duration);
-
                 addClass(video, 'hidden');
                 await timeout(1000);
 
                 video.pause();
-                video.load();
                 source.removeAttribute('src'); // empty source
-                video.play();
                 video.removeChild(source);
-                video.muted = true; 
+                video.muted = true;
                 callback();
                 break;
 
             case 'framesrc':
                 //show movie
-                var youtube = document.getElementById('myyut');
-                youtube.setAttribute('src', "https://www.youtube.com/embed/" + MySet.link + "?controls=0&autoplay=1" + "&start=" + MySet.start + "&end=" + (MySet.start + (MySet.duration / 1000).toString()));
-                removeClass(youtube, 'hidden');
+                var vidObj = {
+                  'videoId': MySet.link,
+                  'startSeconds': MySet.start,
+                  'endSeconds': (Number(MySet.start) + (MySet.duration / 1000))
+                }
+                player.loadVideoById(vidObj);
+                player.setVolume(settings.volume);
 
+                removeClass(player.getIframe(), "hidden")
                 await timeout(MySet.duration);
-                addClass(youtube, 'hidden');
+                addClass(player.getIframe(), 'hidden');
                 await timeout(1000);
 
-                youtube.removeAttribute('src');
                 callback();
                 break;
             case 'text':
-                var text = document.getElementById('mytext'); 
+                var text = document.getElementById('mytext');
                 var styles = MySet.style.split(" ");
-                text.innerHTML = MySet.message;
+                text.textContent = MySet.message;
                 removeClass(text, 'hidden');
                 if (MySet.style) {
                     for (var style in styles)
@@ -92,7 +109,7 @@ if (window.WebSocket) {
                 }
                 await timeout(1000);
 
-                text.innerHTML = "";
+                text.textContent = "";
                 callback();
                 break;
             case 'img':
@@ -119,7 +136,7 @@ if (window.WebSocket) {
 
                 image.removeAttribute('src');
                 callback();
-        }        
+        }
     }, 1);
 
     //---------------------------------
@@ -157,7 +174,7 @@ if (window.WebSocket) {
             //parse jason data
             var MySet = JSON.parse(jsonObject.data);
             MySet.element = '';
-            console.log("Parsed" + jsonObject);        
+            console.log("Parsed" + jsonObject);
 
             switch (jsonObject.event) {
                 case "EVENT_GIF" + targetSuffix:
@@ -212,7 +229,3 @@ function removeClass(el, className) {
         el.className = el.className.replace(reg, ' ');
     }
 }
-
-
-
-
