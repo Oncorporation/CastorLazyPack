@@ -7,7 +7,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('divYT', {
         playerVars: {
-            'controls': 0'
+            'controls': 0
         }
     });
     var iframe;
